@@ -1,11 +1,6 @@
---CAUTION h2 se tu dong doi ten column
+#--CAUTION h2 se tu dong doi ten column
 
-create table userr;
-create table Product;
-create table Cart;
-create table Ordered_Product;
-create table Comment;
-create table booking;
+
 
 insert into userr (id , user_full_name, user_user_name, user_password, user_email, user_role)
 values
