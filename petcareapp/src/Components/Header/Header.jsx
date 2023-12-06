@@ -5,19 +5,53 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CartComponent from '../Body/sidebar.cart/CartComponent';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../security/AuthContext';
 import { useCart } from '../CartControl/CartProvider';
 
 export default function Header() {
     const authContext = useAuth();
     const cartContext = useCart();
+    const [activeNavItem, setActiveNavItem] = useState(null);
+    const [activePetItem, setActivePetItem] = useState(null);
+    const location = useLocation();
+
+    const handleNavItemClick = (item) => {
+        setActiveNavItem(item);
+    };
 
     function handleCartClick() {
         cartContext.setIsCartOpen(true);
     }
+
+    useEffect(() => {
+        // Xác định nút kích hoạt dựa trên location
+        const path = location.pathname.toLowerCase();
+        switch (path) {
+            case '/':
+                setActiveNavItem('home');
+                break;
+            case '/products/all':
+                setActiveNavItem('products');
+                break;
+            case '/about':
+                setActiveNavItem('about');
+                break;
+            case '/service':
+                setActiveNavItem('services');
+                break;
+            default:
+                setActiveNavItem(null);
+        }
+
+        if (['/cat', '/dog', '/bird'].includes(path)) {
+            setActivePetItem(path.slice(1)); // Lấy tên pet từ đường dẫn
+        } else {
+            setActivePetItem(null);
+        }
+    }, [location.pathname]);
 
     return (
         <header>
@@ -34,52 +68,60 @@ export default function Header() {
                     </div>
 
                     <ul className="nav_left_list">
-                        <li className="nav_left_item">
-                            {' '}
-                            <Link className="nav_left_link" to="/">
+                        <li className={`nav_left_item ${activeNavItem === 'home' ? 'active' : ''}`}>
+                            <Link className="nav_left_link" to="/" onClick={() => setActiveNavItem('home')}>
                                 Home
-                            </Link>{' '}
+                            </Link>
                         </li>
-                        <li className="nav_left_item">
-                            {' '}
-                            <Link className="nav_left_link" to="Products/all">
+                        <li className={`nav_left_item ${activeNavItem === 'products' ? 'active' : ''}`}>
+                            <Link
+                                className="nav_left_link"
+                                to="Products/all"
+                                onClick={() => setActiveNavItem('products')}
+                            >
                                 Products
-                            </Link>{' '}
+                            </Link>
                         </li>
-                        <li className="nav_left_item">
-                            {' '}
-                            <Link className="nav_left_link" to="/About">
+                        <li className={`nav_left_item ${activeNavItem === 'about' ? 'active' : ''}`}>
+                            <Link className="nav_left_link" to="/About" onClick={() => setActiveNavItem('about')}>
                                 About us
-                            </Link>{' '}
+                            </Link>
                         </li>
-                        <li className="nav_left_item">
-                            {' '}
-                            <Link className="nav_left_link" to="/Service">
+                        <li className={`nav_left_item ${activeNavItem === 'services' ? 'active' : ''}`}>
+                            <Link className="nav_left_link" to="/Service" onClick={() => setActiveNavItem('services')}>
                                 Services
-                            </Link>{' '}
+                            </Link>
                         </li>
 
-                        <li className="nav_left_item nav_left_item-bridge">
-                            <Link className="nav_left_link" to="/">
+                        <li className={`nav_left_item nav_left_item-bridge ${activePetItem ? 'active' : ''}`}>
+                            <p className="nav_left_link" onClick={() => setActiveNavItem('information')}>
                                 Information
                                 <FontAwesomeIcon icon={faCaretDown} className="faArrowDown" />
-                            </Link>
-                            <ul class="nav__list-pet">
-                                <li class="nav__item-pet">
-                                    {' '}
-                                    <Link to="/Cat" class="nav__item-pet-link">
+                            </p>
+                            <ul className="nav__list-pet">
+                                <li
+                                    className={`nav__item-pet ${activePetItem === 'cat' ? 'active' : ''}`}
+                                    onClick={() => setActivePetItem('cat')}
+                                >
+                                    <Link to="/cat" className="nav__item-pet-link">
                                         Cat
-                                    </Link>{' '}
+                                    </Link>
                                 </li>
-                                <li class="nav__item-pet">
-                                    <Link to="/Dog" class="nav__item-pet-link">
+                                <li
+                                    className={`nav__item-pet ${activePetItem === 'dog' ? 'active' : ''}`}
+                                    onClick={() => setActivePetItem('dog')}
+                                >
+                                    <Link to="/dog" className="nav__item-pet-link">
                                         Dog
-                                    </Link>{' '}
+                                    </Link>
                                 </li>
-                                <li class="nav__item-pet">
-                                    <Link to="/Bird" class="nav__item-pet-link">
+                                <li
+                                    className={`nav__item-pet ${activePetItem === 'bird' ? 'active' : ''}`}
+                                    onClick={() => setActivePetItem('bird')}
+                                >
+                                    <Link to="/bird" className="nav__item-pet-link">
                                         Bird
-                                    </Link>{' '}
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
