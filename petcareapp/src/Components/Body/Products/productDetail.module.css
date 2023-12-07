@@ -16,6 +16,10 @@
     font-weight: 600;
     line-height: 40px;
 }
+.row {
+    display: flex;
+    justify-content: center;
+}
 .body_product {
     margin-top: 30px;
     padding-bottom: 200px;
@@ -122,6 +126,7 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    margin-left: 50px;
 }
 .input_wrap {
 }
@@ -172,6 +177,7 @@
     align-items: center;
     gap: 50px;
     margin-top: 20px;
+    margin-left: 50px;
 }
 .buy-product {
     display: flex;

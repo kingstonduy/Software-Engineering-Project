@@ -11,7 +11,6 @@ import CommentForm from './CommentForm';
 import { useCart } from '../../CartControl/CartProvider';
 import productImg from '../../../../src/assests/homepage/product.png';
 
-
 export default function ProductDetail() {
     const [quantityValue, setQuantityValue] = useState(1);
     const [product, setProduct] = useState({});
@@ -84,25 +83,25 @@ export default function ProductDetail() {
                     </p>
                 </div>
                 <div className={cs['body_product']}>
-                    <div className="row">
+                    <div className={cs['row']}>
                         <div className="column2">
                             <div className={cs['img_justify']}>
                                 <div className={cs['product_img_wrap']}>
-                                    <img src={product.productImageUrl} alt='' className={cs['product_img']}></img>
+                                    <img src={product.productImageUrl} alt="" className={cs['product_img']}></img>
                                 </div>
                             </div>
                             <div className={cs['other-images']}>
                                 <div className={cs['another-image']}>
-                                    <img src={product.productImageUrl} alt=''></img>
+                                    <img src={product.productImageUrl} alt=""></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={product.productImageUrl} alt=''></img>
+                                    <img src={product.productImageUrl} alt=""></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={product.productImageUrl} alt=''></img>
+                                    <img src={product.productImageUrl} alt=""></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={product.productImageUrl} alt=''></img>
+                                    <img src={product.productImageUrl} alt=""></img>
                                 </div>
                             </div>
                         </div>
