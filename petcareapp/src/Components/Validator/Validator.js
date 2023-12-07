@@ -5,6 +5,7 @@ export function Validator(options,setUsername,setPassword) {
 	// Hàm thực hiện validate
 	function validate(inputElement, rule) {
 		var errorElement = inputElement.closest(options.formGroupSelector).querySelector(options.errorSelector);
+		//console.log(errorElement)
 		var errorMessage;
 
 		var rules = selectorRules[rule.selector]; // Lấy ra key-value là selector blur vào
@@ -23,12 +24,12 @@ export function Validator(options,setUsername,setPassword) {
 			// Khi có lỗi (có giá trị -> true) thì break;
 			if (errorMessage) break;
 		}
-
+	
 		//undefine => không có gì trả về => false ngược lại sẽ trả về => true
 		if (errorMessage) {
 			errorElement.innerText = errorMessage;
 			inputElement.closest(options.formGroupSelector).classList.add('invalid');
-            console.log()
+            
             inputElement.closest(options.formGroupSelector).querySelector('.form-control').classList.add('input-error');
 		} else {
 			errorElement.innerText = '';
@@ -112,6 +113,7 @@ export function Validator(options,setUsername,setPassword) {
 			Array.from(inputElements).forEach((inputElement) => {
 				// Xử lý trường hợp khi blur khỏi input
 				inputElement.onblur = function () {
+					console.log("blurrrr ne")
 					validate(inputElement, rule);
 				};
 
@@ -174,6 +176,16 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
 		selector: selector,
 		test: function (value) {
 			return value === getConfirmValue() ? undefined : message || 'Trường nhập vào không hợp lệ';
+		},
+	};
+};
+
+Validator.isValidDate = function (selector, message) {
+	return {
+		selector: selector,
+		test: function (value) {
+			var regex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+			return regex.test(value) ? undefined : message || 'It should be in format dd/mm/yyyy';
 		},
 	};
 };

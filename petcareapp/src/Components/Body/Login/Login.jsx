@@ -28,7 +28,9 @@ export default function Login() {
             rules: [
                 Validator.isRequired('#username', 'It can not be empty'),
                 Validator.isRequired('#password', 'It can not be empty'),
+            
                 Validator.minLength('#password', 6),
+
             ],
             onSubmit: async function (data) {
                 const user = {
@@ -159,7 +161,7 @@ export default function Login() {
                 </svg>
             </div>
             <div className={cs['login-form-container']}>
-                <div className={cs['login-form']}>
+                <div className={cs['login-form']} id = "form_login">
                     <div className={cs['logo']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 40 35" fill="none">
                             <path
@@ -187,29 +189,31 @@ export default function Login() {
                         </span>
                     )} */}
                     <div className={cs['sign-in-frame']}>
-                        <div className={cs['email-container']}>
+                        <div  className= "form-group" /* className={cs['email-container']}*/ > 
                             <p className={cs['email']}>Email</p>
                             <input
                                 type="text"
-                                className={cs['email-input']}
+                                className= "form-control"  //{cs['email-input']}
                                 value={username}
                                 placeholder="username"
                                 name="username"
                                 id="username"
                                 onChange={handleOnchangeUsername}
                             />
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['password-container']}>
+                        <div className= "form-group" > //className={cs['password-container']}
                             <p className={cs['password']}>Password</p>
                             <input
                                 type="password"
-                                className={cs['password-input']}
+                                className= "form-control" //{cs['password-input']}
                                 value={password}
                                 placeholder="password"
                                 name="password"
                                 id="password"
                                 onChange={handleOnchangePassword}
                             />
+                            <span className="form-message"></span>
                         </div>
                         <div className={cs['remember-forgot']}>
                             <div className={cs['remember-container']}>
