@@ -3,13 +3,15 @@ import BookingHistory from '../../HiddenWrapContainer/BookingHistory';
 import CourseImage from '../../../assests/aboutuspage/courseImg.jpg';
 import TeamImage from '../../../assests/aboutuspage/teamImg.png';
 import CongBang from '../../../assests/aboutuspage/CongBang.png';
-import GiaBao from '../../../assests/aboutuspage/GiaBao.jpg';
+import GiaBao from '../../../assests/aboutuspage/GiaBao.png';
 import TuChi from '../../../assests/aboutuspage/TuChi.png';
 import HoangBao from '../../../assests/aboutuspage/HoangBao.png';
 import NhatHoang from '../../../assests/aboutuspage/NhatHoang.png';
-import MinhVu from '../../../assests/aboutuspage/MinhVu.jpg';
+import MinhVu from '../../../assests/aboutuspage/MinhVu.png';
 import ThanhThao from '../../../assests/aboutuspage/ThanhThao.png';
-import KhanhDuy from '../../../assests/aboutuspage/KhanhDuy.jpg';
+import KhanhDuy from '../../../assests/aboutuspage/KhanhDuy.png';
+import DuyKhang from '../../../assests/aboutuspage/DuyKhang.png';
+import TrongNghia from '../../../assests/aboutuspage/TrongNghia.png';
 
 import cs from './About.module.css';
 const About = () => {
@@ -24,13 +26,13 @@ const About = () => {
     const Members = [
         {
             id: 1,
-            image: ThanhThao,
+            image: TrongNghia,
             name: 'Trọng Nghĩa',
             role: 'Project Manager',
         },
         {
             id: 2,
-            image: ThanhThao,
+            image: KhanhDuy,
             name: 'Khánh Duy',
             role: 'Back-end Developer',
         },
@@ -54,14 +56,14 @@ const About = () => {
         },
         {
             id: 6,
-            image: ThanhThao,
+            image: MinhVu,
             name: 'Minh Vũ',
             role: 'Back-end Developer',
         },
 
         {
             id: 7,
-            image: ThanhThao,
+            image: GiaBao,
             name: 'Gia Bảo',
             role: 'Front-end Developer',
         },
@@ -79,7 +81,7 @@ const About = () => {
         },
         {
             id: 10,
-            image: NhatHoang,
+            image: DuyKhang,
             name: 'Duy Khang',
             role: 'UI/UX Designer',
         },
