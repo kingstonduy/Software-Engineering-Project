@@ -9,7 +9,6 @@ import { useCart } from '../../CartControl/CartProvider';
 
 export default function Product({ data }) {
     const navigate = useNavigate();
-
     const authContext = useAuth();
     const cartContext = useCart();
     const { id, productName, productQuantity, productCategory, productPrice, productImageUrl } = data;
@@ -47,7 +46,7 @@ export default function Product({ data }) {
 
             <Link to={`/Product/Detail/${id}`} className={cs['product-card']}>
                 <div className={cs['product-img']}>
-                    <img src={product} alt=""></img>
+                    <img src={productImageUrl} alt=""></img>
                 </div>
                 <p className={cs['product-name']}>
                     {productName.length > 20 ? `${productName.slice(0, 30)}...` : productName}

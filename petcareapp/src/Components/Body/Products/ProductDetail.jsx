@@ -88,21 +88,21 @@ export default function ProductDetail() {
                         <div className="column2">
                             <div className={cs['img_justify']}>
                                 <div className={cs['product_img_wrap']}>
-                                    <div style={linkStyle} className={cs['product_img']}></div>
+                                    <img src={product.productImageUrl} alt='' className={cs['product_img']}></img>
                                 </div>
                             </div>
                             <div className={cs['other-images']}>
                                 <div className={cs['another-image']}>
-                                    <img src={productImg} alt=''></img>
+                                    <img src={product.productImageUrl} alt=''></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={productImg} alt=''></img>
+                                    <img src={product.productImageUrl} alt=''></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={productImg} alt=''></img>
+                                    <img src={product.productImageUrl} alt=''></img>
                                 </div>
                                 <div className={cs['another-image']}>
-                                    <img src={productImg} alt=''></img>
+                                    <img src={product.productImageUrl} alt=''></img>
                                 </div>
                             </div>
                         </div>

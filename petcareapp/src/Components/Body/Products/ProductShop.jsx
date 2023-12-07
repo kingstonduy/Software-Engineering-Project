@@ -98,7 +98,6 @@ export default function ProductShop() {
     return (
         <div className={cs['body']}>
             <img src={PetShopProduct} alt=""></img>
-
             <div className="grid">
                 <div className={cs['body_sort']}>
                     <div className={cs['body_sort_left']}>
