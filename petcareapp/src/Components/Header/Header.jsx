@@ -145,7 +145,7 @@ export default function Header() {
                                         <FontAwesomeIcon icon={faUser} className="faArrowDown" />
                                     </Link>
                                 ) : (
-                                    <Link to="/login" className="login_btn">
+                                    <Link to="/register" className="login_btn">
                                         Sign up
                                     </Link>
                                 )}

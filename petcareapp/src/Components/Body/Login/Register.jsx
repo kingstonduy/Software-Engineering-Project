@@ -1,4 +1,5 @@
 import cs from './register.module.css';
+import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Dog from '../../../assests/loginpage/doglogo.png';
@@ -37,7 +38,7 @@ export default function Login() {
         Validator(
             {
                 form: '#form_register',
-                formGroupSelector: '.form-group',
+                formGroupSelector: '#form-group',
                 errorSelector: '.form-message',
                 rules: [
                     Validator.isRequired('#username', 'It can not be empty'),
@@ -45,6 +46,7 @@ export default function Login() {
                     Validator.isRequired('#confirmPassword', 'It can not be empty'),
                     Validator.isRequired('#email', 'It can not be empty'),
                     Validator.isRequired('#fullname', 'It can not be empty'),
+                    Validator.isRequired('#phoneno', 'It can not be empty'),
 
                     Validator.minLength('#password', 6),
                     Validator.isConfirmed(
@@ -52,9 +54,9 @@ export default function Login() {
                         function () {
                             return document.querySelector('#form_register #confirmPassword').value;
                         },
-                        'Its incorrect',
+                        "It's incorrect",
                     ),
-                    Validator.isEmail('#email', 'It should be email'),
+                    Validator.isEmail('#email', 'It should be in email type'),
                 ],
                 onSubmit: function (data) {
                     const user = {
@@ -93,6 +95,11 @@ export default function Login() {
     }
 
     function handleOnchangeEmail(e) {
+        setEmail(e.target.value);
+        e.target.classList.remove('input-error');
+    }
+
+    function handleOnchangePhoneNumber(e) {
         setEmail(e.target.value);
         e.target.classList.remove('input-error');
     }
@@ -209,61 +216,102 @@ export default function Login() {
                         <h4>Sign Up</h4>
                         <p>Create your Hope UI account</p>
                     </div>
-                    <div className={cs['register-frame']}>
-                        <div className={cs['register-info-container']}>
-                            <p className={cs['register-info']}>First name</p>
+                    <div id="form_register" className={cs['register-frame']}>
+                        <div id="form-group" className={cs['register-info-container']}>
+                            <p className={cs['register-info']}>Full name</p>
                             <input
                                 type="text"
-                                className={cs['register-info-input']}
-                                placeholder="Enter your first name"
+                                className="form-control"
+                                id="fullname"
+                                placeholder="Enter your full name"
+                                // value={fullname}
+                                name="fullname"
+                                onChange={handleOnchangeFullname}
                             />
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['register-info-container']}>
-                            <p className={cs['register-info']}>Last name</p>
+                        <div id="form-group" className={cs['register-info-container']}>
+                            <p className={cs['register-info']}>User name</p>
                             <input
                                 type="text"
-                                className={cs['register-info-input']}
-                                placeholder="Enter your last name"
+                                className="form-control"
+                                id="username"
+                                placeholder="Enter your user name"
+                                name="username"
+                                onChange={handleOnchangeUsername}
                             />
+                            <span className="form-message"></span>
+                            {errorMessage && (
+                                <span
+                                    style={{
+                                        color: 'red',
+                                        'margin-top': '15px',
+                                        alignSelf: 'center',
+                                    }}
+                                    className="form-message"
+                                >
+                                    Your username has already used!
+                                </span>
+                            )}
                         </div>
-                        <div className={cs['register-info-container']}>
+                        <div id="form-group" className={cs['register-info-container']}>
                             <p className={cs['register-info']}>Email</p>
                             <input
                                 type="text"
-                                className={cs['register-info-input']}
+                                className="form-control"
+                                id="email"
                                 placeholder="Enter your email address"
+                                name="email"
+                                onChange={handleOnchangeEmail}
                             />
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['register-info-container']}>
+                        <div id="form-group" className={cs['register-info-container']}>
                             <p className={cs['register-info']}>Phone No.</p>
                             <input
                                 type="text"
-                                className={cs['register-info-input']}
+                                className="form-control"
+                                id="phoneno"
                                 placeholder="Enter your phone number"
+                                name="phoneno"
+                                onChange={handleOnchangePhoneNumber}
                             />
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['register-info-container']}>
+                        <div id="form-group" className={cs['register-info-container']}>
                             <p className={cs['register-info']}>Password</p>
                             <input
                                 type="password"
-                                className={cs['register-info-input']}
+                                className="form-control"
+                                id="password"
                                 placeholder="Enter your password"
+                                name="password"
+                                onChange={handleOnchangePassword}
                             />
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['register-info-container']}>
+                        <div id="form-group" className={cs['register-info-container']}>
                             <p className={cs['register-info']}>Confirm password</p>
                             <input
                                 type="password"
-                                className={cs['register-info-input']}
+                                className="form-control"
+                                id="confirmPassword"
                                 placeholder="Confirm your password"
+                                name="confirmPassword"
+                                onChange={handleOnchangeConfirmPassword}
                             />
+                            <span className="form-message"></span>
                         </div>
                     </div>
                     <div className={cs['agreement']}>
                         <input type="checkbox" />
                         <p className={cs['question']}>I agree with the terms of use</p>
                     </div>
-                    <button className={cs['sign-in-button']}>Sign up</button>
+                    <div id="form-group">
+                        <button type="submit" className="btn_form">
+                            Sign up
+                        </button>
+                    </div>
                     <div className={cs['other-account-container']}>
                         <p>or sign up with other accounts?</p>
                         <div className={cs['other-account']}>
@@ -406,7 +454,9 @@ export default function Login() {
                         </div>
                         <div className={cs['already-have-account']}>
                             <p>Already have an account ? </p>
-                            <Link to='/Login' className={cs['to-sign-in-page']}>Sign in</Link>
+                            <Link to="/Login" className={cs['to-sign-in-page']}>
+                                Sign in
+                            </Link>
                         </div>
                     </div>
                 </div>

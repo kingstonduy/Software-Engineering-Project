@@ -1,4 +1,5 @@
 import cs from './login.module.css';
+import '../Login/login.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Background from '../../../assests/loginpage/background.png';
@@ -23,11 +24,12 @@ export default function Login() {
     useEffect(() => {
         Validator({
             form: '#form_login',
-            formGroupSelector: '.form-group',
-            errorSelector: '.message',
+            formGroupSelector: '#form-group',
+            errorSelector: '.form-message',
             rules: [
                 Validator.isRequired('#username', 'It can not be empty'),
                 Validator.isRequired('#password', 'It can not be empty'),
+
                 Validator.minLength('#password', 6),
             ],
             onSubmit: async function (data) {
@@ -57,11 +59,98 @@ export default function Login() {
     }
 
     function handleForgotPassword() {
-        alert('Good luck next time');
+        alert('Good luck next time !!!');
     }
 
     return (
         <div className={cs['wrapper']}>
+            {/* <div className="grid-1400">
+                <div className="row">
+                    <div className="column3">
+                        <div className={cs['home_item']}>
+                            <h2>Taking care</h2>
+                            <h2>for your Smart Dog !</h2>
+
+                            <p className={cs['home_item_description']}>
+                                Human–canine bonding is the relationship between dogs and humans.
+                            </p>
+
+                            <Link to="/" className={cs['home_btn_Explore']}>{`EXPLORE MORE >`}</Link>
+                        </div>
+                    </div>
+
+                    <div className="column3">
+                        <div className={cs['home_item']}>
+                            <div className={cs['form_logo_wrap']}>
+                                <h1 className={cs['logo_petcare']}>PetPalz</h1>
+                            </div>
+
+                            {errorMessage && (
+                                <span
+                                    style={{
+                                        color: 'red',
+                                        margin: '15px',
+                                        alignSelf: 'center',
+                                    }}
+                                    className="form-message"
+                                >
+                                    Your Username or Password is incorrect!
+                                </span>
+                            )}
+                            <form id="form_login" className="form">
+                                <div className="form-group">
+                                    <input
+                                        value={username}
+                                        type="text"
+                                        placeholder="USERNAME"
+                                        name="username"
+                                        id="username"
+                                        onChange={handleOnchangeUsername}
+                                    />
+                                    <span className="form-message"></span>
+                                </div>
+                                <div className="form-group">
+                                    <input
+                                        value={password}
+                                        type="password"
+                                        placeholder="PASSWORD"
+                                        name="password"
+                                        id="password"
+                                        onChange={handleOnchangePassword}
+                                    />
+                                    <span className="form-message"></span>
+                                </div>
+                                <Link className={cs['link_forgotPassword']} onClick={handleForgotPassword}>
+                                    Forgot password?
+                                </Link>
+
+                                <div className="form-group">
+                                    <button type="submit" className="btn_form">
+                                        LOGIN
+                                    </button>
+                                </div>
+
+                                <div className="form-group">
+                                    <Link to="/Register" className="btn_form">
+                                        {' '}
+                                        REGISTER
+                                    </Link>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div className="column3">
+                        <div className={cs['home_item']}>
+                            <div className={cs['dogImg_wrap']}>
+                                <div className={cs['dog_backGround']}></div>
+
+                                <img src={Dog} alt="" className={cs['dog_img']} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
             <div className={cs['big-logo']}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="317" height="317" viewBox="0 0 317 317" fill="none">
                     <path
@@ -72,7 +161,7 @@ export default function Login() {
                 </svg>
             </div>
             <div className={cs['login-form-container']}>
-                <div className={cs['login-form']}>
+                <div id="form_login" className={cs['login-form']}>
                     <div className={cs['logo']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 40 35" fill="none">
                             <path
@@ -99,32 +188,33 @@ export default function Login() {
                             Your Username or Password is incorrect!
                         </span>
                     )}
-                    <div className={cs['sign-in-frame']}>
-                        <div className={cs['email-container']}>
-                            <p className={`${cs['email']} ${cs['form-group']}`}>Email</p>
+                    {console.log(errorMessage)}
+                    <div id="form_login" className={cs['sign-in-frame']}>
+                        <div id="form-group" className={cs['email-container']}>
+                            <p className={cs['email']}>Email</p>
                             <input
                                 type="text"
-                                className={cs['email-input']}
+                                className="form-control" //{cs['email-input']}
                                 value={username}
                                 placeholder="username"
                                 name="username"
                                 id="username"
                                 onChange={handleOnchangeUsername}
                             />
-                            <span className="message"></span>
+                            <span className="form-message"></span>
                         </div>
-                        <div className={cs['password-container']}>
-                            <p className={`${cs['password']} `}>Password</p>
+                        <div id="form-group" className={cs['password-container']}>
+                            <p className={cs['password']}>Password</p>
                             <input
                                 type="password"
-                                className={cs['password-input']}
+                                className="form-control" //{cs['password-input']}
                                 value={password}
                                 placeholder="password"
                                 name="password"
                                 id="password"
                                 onChange={handleOnchangePassword}
                             />
-                            <span className="message"></span>
+                            <span className="form-message"></span>
                         </div>
                         <div className={cs['remember-forgot']}>
                             <div className={cs['remember-container']}>
@@ -136,7 +226,11 @@ export default function Login() {
                             </p>
                         </div>
                     </div>
-                    <button className={`${cs['sign-in-button']} `}>Sign in</button>
+                    <div id="form-group">
+                        <button type="submit" className="btn_form">
+                            Sign in
+                        </button>
+                    </div>
                     <div className={cs['other-account-container']}>
                         <p>or sign in with other accounts?</p>
                         <div className={cs['other-account']}>

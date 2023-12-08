@@ -57,6 +57,7 @@
     display: grid;
     grid-template-columns: auto auto;
     gap: 15px 25px;
+    width: 150%;
 }
 .register-info-container {
 }
