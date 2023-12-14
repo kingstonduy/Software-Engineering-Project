@@ -161,7 +161,7 @@ export default function Login() {
                 </svg>
             </div>
             <div className={cs['login-form-container']}>
-                <div id="form_login" className={cs['login-form']}>
+                <form id="form_login" className={cs['login-form']}>
                     <div className={cs['logo']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 40 35" fill="none">
                             <path
@@ -191,7 +191,7 @@ export default function Login() {
                     {console.log(errorMessage)}
                     <div id="form_login" className={cs['sign-in-frame']}>
                         <div id="form-group" className={cs['email-container']}>
-                            <p className={cs['email']}>Email</p>
+                            <p className={cs['email']}>Username</p>
                             <input
                                 type="text"
                                 className="form-control" //{cs['email-input']}
@@ -225,11 +225,11 @@ export default function Login() {
                                 Forgot Password
                             </p>
                         </div>
-                    </div>
-                    <div id="form-group">
-                        <button type="submit" className="btn_form">
-                            Sign in
-                        </button>
+                        <div id="form-group">
+                            <button type="submit" className="btn_form">
+                                Sign in
+                            </button>
+                        </div>
                     </div>
                     <div className={cs['other-account-container']}>
                         <p>or sign in with other accounts?</p>
@@ -378,7 +378,7 @@ export default function Login() {
                             </Link>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <img src={Background} alt=""></img>
         </div>

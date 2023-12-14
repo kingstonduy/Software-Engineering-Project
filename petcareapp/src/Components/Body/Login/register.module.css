@@ -23,6 +23,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    /* margin-top: 50%; */
 }
 .name {
     font-size: 33px;
@@ -33,7 +34,7 @@
 }
 
 .register {
-    margin-top: 40px;
+    margin-top: 50px;
 }
 .register h4 {
     color: #000;
@@ -86,7 +87,7 @@
 
 .agreement {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     margin-top: 24px;
@@ -104,18 +105,6 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 175%;
-}
-.forgot {
-    color: #fd7e14;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 175%;
-}
-
-.forgot:hover {
-    text-decoration: underline;
 }
 
 .sign-in-button {

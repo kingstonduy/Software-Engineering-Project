@@ -1,10 +1,7 @@
 import './header.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faCaretDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
 import CartComponent from '../Body/sidebar.cart/CartComponent';
 import React, { useState, useEffect } from 'react';

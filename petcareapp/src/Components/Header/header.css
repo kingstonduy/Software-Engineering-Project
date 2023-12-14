@@ -93,7 +93,12 @@ header {
 
 .nav_logo_cart {
     font-size: 200%;
-    color: rgba(0, 9, 88, 1);
+    color: #FD7E14;
+    background-color: white;
+}
+
+.nav_logo_cart:hover {
+    opacity: 0.7;
 }
 
 .login_btn {
@@ -194,15 +199,22 @@ header {
 
 .avaUser {
     font-size: 25px;
-    color: rgba(0, 9, 88, 1);
+    color: #FD7E14;
     font-weight: 700;
+    background-color: white;
+}
+
+.avaUser:hover {
+    opacity: 0.7;
+    background-color: white;
 }
 
 .cnt-item {
     position: absolute;
     top: -10px;
-    padding-left: 9px;
-    padding-right: 9px;
+    left: 20px;
+    padding-left: 8px;
+    padding-right: 8px;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;

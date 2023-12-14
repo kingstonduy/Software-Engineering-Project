@@ -216,7 +216,7 @@ export default function Login() {
                         <h4>Sign Up</h4>
                         <p>Create your Hope UI account</p>
                     </div>
-                    <div id="form_register" className={cs['register-frame']}>
+                    <form id="form_register" className={cs['register-frame']}>
                         <div id="form-group" className={cs['register-info-container']}>
                             <p className={cs['register-info']}>Full name</p>
                             <input
@@ -302,16 +302,16 @@ export default function Login() {
                             />
                             <span className="form-message"></span>
                         </div>
-                    </div>
-                    <div className={cs['agreement']}>
-                        <input type="checkbox" />
-                        <p className={cs['question']}>I agree with the terms of use</p>
-                    </div>
-                    <div id="form-group">
-                        <button type="submit" className="btn_form">
-                            Sign up
-                        </button>
-                    </div>
+                        <div className={cs['agreement']}>
+                            <input type="checkbox" />
+                            <p className={cs['question']}>I agree with the terms of use</p>
+                        </div>
+                        <div id="form-group">
+                            <button type="submit" className="btn_form">
+                                Sign up
+                            </button>
+                        </div>
+                    </form>
                     <div className={cs['other-account-container']}>
                         <p>or sign up with other accounts?</p>
                         <div className={cs['other-account']}>
