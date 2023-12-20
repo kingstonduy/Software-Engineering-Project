@@ -12,9 +12,11 @@ public class  PetcareApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PetcareApplication.class, args);
 	}
-	@Bean
+
+    @Bean
 	public WebMvcConfigurer corsCongigurer(){
 		return new WebMvcConfigurer(){
+            
 			public void addCorsMappings(CorsRegistry registry){
 				registry.addMapping("/**")
 						.allowedMethods("*")
