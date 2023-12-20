@@ -29,36 +29,42 @@ const About = () => {
             image: TrongNghia,
             name: 'Trọng Nghĩa',
             role: 'Project Manager',
+            github: 'https://github.com/nguyentrongnghia1702',
         },
         {
             id: 2,
             image: KhanhDuy,
             name: 'Khánh Duy',
             role: 'Back-end Developer',
+            github: 'https://github.com/kingstonduy',
         },
         {
             id: 3,
             image: CongBang,
             name: 'Công Bằng',
             role: 'Front-end Developer',
+            github: 'https://github.com/congbangitiu',
         },
         {
             id: 4,
             image: HoangBao,
             name: 'Hoàng Bảo',
             role: 'Front-end Developer',
+            github: 'https://github.com/PhanNguyenHoangBao-ITITIU20165',
         },
         {
             id: 5,
             image: TuChi,
             name: 'Tú Chi',
-            role: 'Reporter',
+            role: 'Business Analyst',
+            github: 'https://github.com/tuchihuynhxjulie',
         },
         {
             id: 6,
             image: MinhVu,
             name: 'Minh Vũ',
             role: 'Back-end Developer',
+            github: 'https://github.com/PMinhVu',
         },
 
         {
@@ -66,24 +72,28 @@ const About = () => {
             image: GiaBao,
             name: 'Gia Bảo',
             role: 'Front-end Developer',
+            github: 'https://github.com/giabao18',
         },
         {
             id: 8,
             image: NhatHoang,
             name: 'Nhật Hoàng',
             role: 'UI/UX Designer',
+            github: 'https://github.com/HoangLeCoder',
         },
         {
             id: 9,
             image: ThanhThao,
             name: 'Thanh Thảo',
-            role: 'Reporter',
+            role: 'Business Analyst',
+            github: 'https://github.com/nanalynh',
         },
         {
             id: 10,
             image: DuyKhang,
             name: 'Duy Khang',
             role: 'UI/UX Designer',
+            github: 'https://github.com/ITITIU20227',
         },
     ];
 
@@ -128,13 +138,15 @@ const About = () => {
                 <p>Our team has the total of 10 members</p>
                 <div className={cs['member-cards-container']}>
                     {Members.map((member) => (
-                        <div className={cs['member-card']}>
-                            <img src={member.image} alt=""></img>
-                            <div className={cs['member-info']}>
-                                <h4>{member.name}</h4>
-                                <p>{member.role}</p>
+                        <a href={member.github} key={member.id}>
+                            <div className={cs['member-card']}>
+                                <img src={member.image} alt=""></img>
+                                <div className={cs['member-info']}>
+                                    <h4>{member.name}</h4>
+                                    <p>{member.role}</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
             </div>

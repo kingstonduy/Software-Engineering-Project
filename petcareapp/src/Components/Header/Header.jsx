@@ -1,12 +1,14 @@
 import './header.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faCaretDown, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link, useLocation } from 'react-router-dom';
+import { faCartShopping, faCaretDown, faUser, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CartComponent from '../Body/sidebar.cart/CartComponent';
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../security/AuthContext';
 import { useCart } from '../CartControl/CartProvider';
+import { useCookies } from 'react-cookie';
+
 
 export default function Header() {
     const authContext = useAuth();
@@ -14,10 +16,20 @@ export default function Header() {
     const [activeNavItem, setActiveNavItem] = useState(null);
     const [activePetItem, setActivePetItem] = useState(null);
     const location = useLocation();
+    const AuthContext = useAuth();
+    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     const handleNavItemClick = (item) => {
         setActiveNavItem(item);
     };
+
+    function handleLogout() {
+        removeCookie('username');
+        removeCookie('password');
+        authContext.logout();
+        navigate('/login');
+    }
 
     function handleCartClick() {
         cartContext.setIsCartOpen(true);
@@ -64,65 +76,71 @@ export default function Header() {
                         <h2 className="nav_logo">PetPalz</h2>
                     </div>
 
-                    <ul className="nav_left_list">
-                        <li className={`nav_left_item ${activeNavItem === 'home' ? 'active' : ''}`}>
-                            <Link className="nav_left_link" to="/" onClick={() => setActiveNavItem('home')}>
-                                Home
-                            </Link>
-                        </li>
-                        <li className={`nav_left_item ${activeNavItem === 'products' ? 'active' : ''}`}>
-                            <Link
-                                className="nav_left_link"
-                                to="Products/all"
-                                onClick={() => setActiveNavItem('products')}
-                            >
-                                Products
-                            </Link>
-                        </li>
-                        <li className={`nav_left_item ${activeNavItem === 'about' ? 'active' : ''}`}>
-                            <Link className="nav_left_link" to="/About" onClick={() => setActiveNavItem('about')}>
-                                About us
-                            </Link>
-                        </li>
-                        <li className={`nav_left_item ${activeNavItem === 'services' ? 'active' : ''}`}>
-                            <Link className="nav_left_link" to="/Service" onClick={() => setActiveNavItem('services')}>
-                                Services
-                            </Link>
-                        </li>
+                    {AuthContext.isAuthenticated && (
+                        <ul className="nav_left_list">
+                            <li className={`nav_left_item ${activeNavItem === 'home' ? 'active' : ''}`}>
+                                <Link className="nav_left_link" to="/" onClick={() => setActiveNavItem('home')}>
+                                    Home
+                                </Link>
+                            </li>
+                            <li className={`nav_left_item ${activeNavItem === 'products' ? 'active' : ''}`}>
+                                <Link
+                                    className="nav_left_link"
+                                    to="Products/all"
+                                    onClick={() => setActiveNavItem('products')}
+                                >
+                                    Products
+                                </Link>
+                            </li>
+                            <li className={`nav_left_item ${activeNavItem === 'about' ? 'active' : ''}`}>
+                                <Link className="nav_left_link" to="/About" onClick={() => setActiveNavItem('about')}>
+                                    About us
+                                </Link>
+                            </li>
+                            <li className={`nav_left_item ${activeNavItem === 'services' ? 'active' : ''}`}>
+                                <Link
+                                    className="nav_left_link"
+                                    to="/Service"
+                                    onClick={() => setActiveNavItem('services')}
+                                >
+                                    Services
+                                </Link>
+                            </li>
 
-                        <li className={`nav_left_item nav_left_item-bridge ${activePetItem ? 'active' : ''}`}>
-                            <p className="nav_left_link" onClick={() => setActiveNavItem('information')}>
-                                Information
-                                <FontAwesomeIcon icon={faCaretDown} className="faArrowDown" />
-                            </p>
-                            <ul className="nav__list-pet">
-                                <li
-                                    className={`nav__item-pet ${activePetItem === 'cat' ? 'active' : ''}`}
-                                    onClick={() => setActivePetItem('cat')}
-                                >
-                                    <Link to="/cat" className="nav__item-pet-link">
-                                        Cat
-                                    </Link>
-                                </li>
-                                <li
-                                    className={`nav__item-pet ${activePetItem === 'dog' ? 'active' : ''}`}
-                                    onClick={() => setActivePetItem('dog')}
-                                >
-                                    <Link to="/dog" className="nav__item-pet-link">
-                                        Dog
-                                    </Link>
-                                </li>
-                                <li
-                                    className={`nav__item-pet ${activePetItem === 'bird' ? 'active' : ''}`}
-                                    onClick={() => setActivePetItem('bird')}
-                                >
-                                    <Link to="/bird" className="nav__item-pet-link">
-                                        Bird
-                                    </Link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                            <li className={`nav_left_item nav_left_item-bridge ${activePetItem ? 'active' : ''}`}>
+                                <p className="nav_left_link" onClick={() => setActiveNavItem('information')}>
+                                    Information
+                                    <FontAwesomeIcon icon={faCaretDown} className="faArrowDown" />
+                                </p>
+                                <ul className="nav__list-pet">
+                                    <li
+                                        className={`nav__item-pet ${activePetItem === 'cat' ? 'active' : ''}`}
+                                        onClick={() => setActivePetItem('cat')}
+                                    >
+                                        <Link to="/cat" className="nav__item-pet-link">
+                                            Cat
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className={`nav__item-pet ${activePetItem === 'dog' ? 'active' : ''}`}
+                                        onClick={() => setActivePetItem('dog')}
+                                    >
+                                        <Link to="/dog" className="nav__item-pet-link">
+                                            Dog
+                                        </Link>
+                                    </li>
+                                    <li
+                                        className={`nav__item-pet ${activePetItem === 'bird' ? 'active' : ''}`}
+                                        onClick={() => setActivePetItem('bird')}
+                                    >
+                                        <Link to="/bird" className="nav__item-pet-link">
+                                            Bird
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    )}
                 </div>
 
                 <div className="nav_wrap_right">
@@ -138,13 +156,21 @@ export default function Header() {
                         <li className="nav_right_item">
                             <div className="signUp_wrap">
                                 {authContext.isAuthenticated ? (
-                                    <Link to="/Account" className="avaUser">
-                                        <FontAwesomeIcon icon={faUser} className="faArrowDown" />
-                                    </Link>
+                                    <>
+                                        <Link to="/Account" className="avaUser">
+                                            <FontAwesomeIcon icon={faUser} className="faArrowDown" />
+                                        </Link>
+                                        <FontAwesomeIcon icon={faArrowRightFromBracket} className="log-out-icon" onClick={handleLogout}/>
+                                    </>
                                 ) : (
-                                    <Link to="/register" className="login_btn">
-                                        Sign up
-                                    </Link>
+                                    <div className="authentication">
+                                        <Link to="/login" className="login_btn">
+                                            Sign in
+                                        </Link>
+                                        <Link to="/register" className="login_btn">
+                                            Sign up
+                                        </Link>
+                                    </div>
                                 )}
                             </div>
                         </li>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getOrderedProduct, getUserInformation } from '../../apiClient/UserApi';
 import { useAuth } from '../../security/AuthContext';
 import cs from './Account.module.css';
+import LogoIU from '../../../assests/accountpage/logoIU.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -91,15 +92,10 @@ const Account = () => {
 
     const loadMore =
         !initLoading && !loading && list.length > 0 && wordEntered === '' && list.length < data.length ? (
-            <div
-                style={{
-                    textAlign: 'center',
-                    marginTop: 12,
-                    height: 32,
-                    lineHeight: '32px',
-                }}
-            >
-                <Button onClick={onLoadMore}>Load More</Button>
+            <div className={cs['load-more-btn-container']}>
+                <Button className={cs['load-more-btn']} onClick={onLoadMore}>
+                    Load more
+                </Button>
             </div>
         ) : null;
 
@@ -112,96 +108,144 @@ const Account = () => {
     }
 
     return (
-        <div>
-            <div className={cs['body']}>
-                <div className={cs['grid-column-left']}>
-                    <div className={cs['avatar-image']}>
-                        <FontAwesomeIcon icon={faUser} className={cs['user-icon']} />
+        <>
+            <div className={cs['wrapper']}>
+                {/* <div className={cs['body']}>
+                    <div className={cs['grid-column-left']}>
+                        <div className={cs['avatar-image']}>
+                            <FontAwesomeIcon icon={faUser} className={cs['user-icon']} />
+                        </div>
+
+                        <div className={cs['avatar-name']}>{user.userFullName}</div>
+
+                        <div className={cs['change-information-icon']}>
+                            <button onClick={handleChangeInformation}>
+                                <img src="https://www.svgrepo.com/show/512628/pen-1319.svg" alt="" />
+                            </button>
+                        </div>
+
+                        <div className={cs['change-information-label']}>
+                            <button onClick={handleOpenChangeTrue}>Change information</button>
+                        </div>
                     </div>
 
-                    <div className={cs['avatar-name']}>{user.userFullName}</div>
-
-                    <div className={cs['change-information-icon']}>
-                        <button onClick={handleChangeInformation}>
-                            <img src="https://www.svgrepo.com/show/512628/pen-1319.svg" alt="" />
+                    <div className={cs['grid-header']}>
+                        <h1>Online shopping history</h1>
+                        <div onClick={handleOpenBookingTrue} className={cs['btn-logout']}>
+                            Booking History
+                        </div>
+                        <button onClick={handleLogout} className={cs['btn-logout']}>
+                            Logout
                         </button>
                     </div>
 
-                    <div className={cs['change-information-label']}>
-                        <button onClick={handleOpenChangeTrue}>Change information</button>
-                    </div>
-                </div>
+                    <div className={cs['grid-column-right']}>
+                        <SearchBar
+                            setData={setList}
+                            originalData={data}
+                            wordEntered={wordEntered}
+                            setWordEntered={setWordEntered}
+                        />
 
-                <div className={cs['grid-header']}>
-                    <h1>Online shopping history</h1>
-                    <div onClick={handleOpenBookingTrue} className={cs['btn-logout']}>
-                        Booking History
-                    </div>
-                    <button onClick={handleLogout} className={cs['btn-logout']}>
-                        Logout
-                    </button>
-                </div>
+                        <div className={cs['products-table']}>
+                            <div className={cs['table-header']}>
+                                <div className={`${cs['product-main-header']} ${cs['centered-text']}`}>Product</div>
 
-                <div className={cs['grid-column-right']}>
-                    {/* <div className={cs["searching-bar"]}>
-                        <div className={cs["input-searching"]}>
-                            <input type="text" name="" id="" placeholder='search' />
+                                <div className={`${cs['product-header-price']} ${cs['centered-text']}`}>Price</div>
 
-                            <div className={cs["searching-icon"]}>
-                                <button onClick={handleSearching}>
-                                    <span className={cs['magnifying-image']}>
-                                        <img src="https://www.svgrepo.com/show/479452/magnifying-glass-for-search.svg" alt="" />
-                                    </span>
-                                    
-                                </button>
+                                <div className={`${cs['product-header-quantity']} ${cs['centered-text']}`}>
+                                    Quantity
+                                </div>
+
+                                <div className={`${cs['product-header-total']} ${cs['centered-text']}`}>Total</div>
                             </div>
+
+                            {
+                                <List
+                                    loading={initLoading}
+                                    itemLayout="horizontal"
+                                    loadMore={loadMore}
+                                    dataSource={list}
+                                    renderItem={(item, index) => {
+                                        return (
+                                            <List.Item style={{ borderBlockEnd: 'none' }}>
+                                                <OrderItem item={item} />
+                                            </List.Item>
+                                        );
+                                    }}
+                                />
+                            }
                         </div>
-                    </div> */}
-                    <SearchBar
-                        setData={setList}
-                        originalData={data}
-                        wordEntered={wordEntered}
-                        setWordEntered={setWordEntered}
-                    />
-
-                    <div className={cs['products-table']}>
-                        <div className={cs['table-header']}>
-                            <div className={`${cs['product-main-header']} ${cs['centered-text']}`}>Product</div>
-
-                            <div className={`${cs['product-header-price']} ${cs['centered-text']}`}>Price</div>
-
-                            <div className={`${cs['product-header-quantity']} ${cs['centered-text']}`}>Quantity</div>
-
-                            <div className={`${cs['product-header-total']} ${cs['centered-text']}`}>Total</div>
-                        </div>
-
-                        {
-                            <List
-                                loading={initLoading}
-                                itemLayout="horizontal"
-                                loadMore={loadMore}
-                                dataSource={list}
-                                renderItem={(item, index) => {
-                                    return (
-                                        <List.Item style={{ borderBlockEnd: 'none' }}>
-                                            <OrderItem item={item} />
-                                        </List.Item>
-                                    );
-                                }}
-                            />
-                        }
+                        {open && <BookingHistory handleOpenBookingFalse={handleOpenBookingFalse} />}
                     </div>
-                    {open && <BookingHistory handleOpenBookingFalse={handleOpenBookingFalse} />}
                 </div>
-            </div>
 
+                {openChange && (
+                    <UserChangeInformation
+                        retrieveUserInformation={retrieveUserInformation}
+                        handleOpenChangeFalse={handleOpenChangeFalse}
+                    />
+                )} */}
+
+                <div className={cs['info-container']}>
+                    <div className={cs['user-info']}>
+                        <img src={LogoIU} alt="" /> 
+                        <div>
+                            <h4>{user.userFullName}</h4>
+                            <p>{user.userEmail}</p>
+                        </div>
+                    </div>
+                    <div className={cs['user-interaction']}>
+                        <button onClick={handleOpenBookingTrue} className={cs['booking-history-btn']}>
+                            Booking History
+                        </button>
+                        <button className={cs['change-password-btn']} onClick={handleOpenChangeTrue}>
+                            Change password
+                        </button>
+                    </div>
+                </div>
+                <SearchBar
+                    setData={setList}
+                    originalData={data}
+                    wordEntered={wordEntered}
+                    setWordEntered={setWordEntered}
+                />
+
+                <h4 className={cs['puschase-history']}>Purchase History</h4>
+
+                <div className={cs['products-table']}>
+                    <div className={cs['table-header']}>
+                        <div className={`${cs['product-main-header']} ${cs['centered-text']}`}>Product</div>
+                        <div className={`${cs['product-header-price']} ${cs['centered-text']}`}>Price</div>
+                        <div className={`${cs['product-header-quantity']} ${cs['centered-text']}`}>Quantity</div>
+                        <div className={`${cs['product-header-total']} ${cs['centered-text']}`}>Total</div>
+                    </div>
+
+                    {
+                        <List
+                            loading={initLoading}
+                            itemLayout="horizontal"
+                            loadMore={loadMore}
+                            dataSource={list}
+                            renderItem={(item, index) => {
+                                return (
+                                    <List.Item style={{ borderBlockEnd: 'none' }}>
+                                        <OrderItem item={item} />
+                                    </List.Item>
+                                );
+                            }}
+                        />
+                    }
+                </div>
+                {open && <BookingHistory handleOpenBookingFalse={handleOpenBookingFalse} />}
+            </div>
             {openChange && (
                 <UserChangeInformation
                     retrieveUserInformation={retrieveUserInformation}
                     handleOpenChangeFalse={handleOpenChangeFalse}
                 />
             )}
-        </div>
+        </>
     );
 };
 

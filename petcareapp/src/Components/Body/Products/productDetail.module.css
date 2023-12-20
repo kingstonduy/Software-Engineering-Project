@@ -78,8 +78,8 @@
 }
 
 .top_wrap .product_price {
-    color: #ef603d;
-    font-family: Poppins;
+    color: #fd7e14;
+    font-family: Inter;
     font-size: 62px;
     font-weight: 700;
     line-height: 128px;
@@ -99,6 +99,7 @@
     font-weight: 400;
     line-height: 32px;
     margin-top: 10px;
+    text-align: justify;
 }
 
 .rating {
@@ -140,7 +141,7 @@
 .btn-cal {
     width: 40px;
     height: 30px;
-    background-color: rgb(19, 19, 19);
+    background-color: #fd7e14;
     color: white;
     border: none;
     cursor: pointer;
@@ -151,8 +152,10 @@
     width: 70px;
     height: 30px;
     text-align: center;
+    color: #4c5276;
     font-weight: bold;
     font-size: 15px;
+    border: none;
 }
 
 .currentQuantity {

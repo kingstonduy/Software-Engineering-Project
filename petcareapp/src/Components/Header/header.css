@@ -7,6 +7,7 @@ header {
     width: 100%;
     border-bottom: 5px solid #FD7E14;
     box-shadow: 0 0 5px rgba(253, 126, 20, 0.9);
+    top: 0;
 }
 
 .header_nav {
@@ -163,6 +164,17 @@ header {
     margin-left: 5px;
 }
 
+.log-out-icon {
+    font-size: 25px;
+    color: #fd7e14;
+    margin-left: 30px;
+}
+
+.log-out-icon:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 @keyframes Opa {
     from {
         opacity: 0;
@@ -224,4 +236,10 @@ header {
 .nav_left_item.active .nav_left_link,
 .nav_left_item.active-link .nav_left_link {
     color: #fd7e14;
+}
+
+.authentication {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }

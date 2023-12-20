@@ -90,6 +90,10 @@
     grid-template-columns: auto auto auto auto auto;
     gap: 20px;
 }
+.member-cards-container a {
+    text-decoration: none;
+    background-color: transparent;
+}
 .member-card {
     display: flex;
     flex-direction: column;

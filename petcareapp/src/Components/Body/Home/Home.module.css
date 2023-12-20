@@ -4,7 +4,6 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-
 }
 .introduction {
     display: flex;
@@ -40,6 +39,7 @@
     align-items: center;
     gap: 50px;
     margin-top: 30px;
+    margin-bottom: 60px;
 }
 .pet {
     width: 50px;
@@ -51,13 +51,13 @@
     align-items: center;
 }
 .shopping-button {
-    width: 188px;
-    height: 52px;
+    padding: 15px 20px;
     border-radius: 12px;
     background: var(--Primary, #fd7e14);
     box-shadow: 0px 24px 48px 6px rgba(253, 89, 86, 0.08), 0px 12px 24px 6px rgba(253, 89, 86, 0.08);
     border-color: transparent;
-    margin-top: 30px;
+    text-decoration: none;
+    margin-top: 50px;
 
     color: #fffefd;
     font-family: Poppins;
@@ -65,7 +65,6 @@
     font-weight: 600;
 }
 .shopping-button:hover {
-    opacity: 0.9;
     cursor: pointer;
 }
 
