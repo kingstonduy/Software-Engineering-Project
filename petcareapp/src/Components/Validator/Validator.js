@@ -5,6 +5,7 @@ export function Validator(options,setUsername,setPassword) {
 	// Hàm thực hiện validate
 	function validate(inputElement, rule) {
 		var errorElement = inputElement.closest(options.formGroupSelector).querySelector(options.errorSelector);
+		//console.log(errorElement)
 		var errorMessage;
 
 		var rules = selectorRules[rule.selector]; // Lấy ra key-value là selector blur vào
@@ -23,12 +24,12 @@ export function Validator(options,setUsername,setPassword) {
 			// Khi có lỗi (có giá trị -> true) thì break;
 			if (errorMessage) break;
 		}
-
+	
 		//undefine => không có gì trả về => false ngược lại sẽ trả về => true
 		if (errorMessage) {
 			errorElement.innerText = errorMessage;
 			inputElement.closest(options.formGroupSelector).classList.add('invalid');
-            console.log()
+            
             inputElement.closest(options.formGroupSelector).querySelector('.form-control').classList.add('input-error');
 		} else {
 			errorElement.innerText = '';
@@ -160,10 +161,10 @@ Validator.minLength = function (selector, min, message) {
 			var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
 			if (value.length >= min) {
 				return regex.test(value) ? undefined : message || `
-                It should be included
-                 1 Uppercase Character 
-                 1 LowerCase Character  
-                 1 number `;
+                It should be included at least: 
+                - One uppercase character 
+                - One lowercase character  
+                - One digit `;
 			} else return `It must be greater than ${min} character`;
 		},
 	};
@@ -174,6 +175,16 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
 		selector: selector,
 		test: function (value) {
 			return value === getConfirmValue() ? undefined : message || 'Trường nhập vào không hợp lệ';
+		},
+	};
+};
+
+Validator.isValidDate = function (selector, message) {
+	return {
+		selector: selector,
+		test: function (value) {
+			var regex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+			return regex.test(value) ? undefined : message || 'It should be in format dd/mm/yyyy';
 		},
 	};
 };
