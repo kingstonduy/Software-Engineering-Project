@@ -3,6 +3,6 @@ import axios from 'axios'
 
 export const apiClient = axios.create(
     {
-        baseURL: 'http://188.166.204.69:9000/'
+        baseURL: 'http://146.190.195.162/is/v1'
     }
 )

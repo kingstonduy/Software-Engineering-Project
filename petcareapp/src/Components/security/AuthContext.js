@@ -20,8 +20,9 @@ export default function AuthProvider({children}){
 
             try{
                 console.log(user)
+                console.log(checkLogin(user))
                 const response = await checkLogin(user)
-                // console.log(response)
+                console.log(response)
                 if(response.status == 200){
                     setAuthenticated(true)
                     setUsername(user.userUserName)
