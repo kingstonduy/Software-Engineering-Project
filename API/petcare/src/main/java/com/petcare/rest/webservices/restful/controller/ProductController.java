@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petcare.rest.webservices.restful.model.Product;
@@ -14,6 +15,7 @@ import com.petcare.rest.webservices.restful.service.ProductService;
 
 
 @RestController
+@RequestMapping("is/v1")
 public class ProductController {
     ProductService service;
 
