@@ -38,20 +38,21 @@ pipeline {
                 }
                 
             }
-
-       }
+        }
 
 
         stage("Build & Push Docker Image") {
                 steps {
-                    script {
-                        docker.withRegistry('',DOCKER_PASS) {
-                            docker_image = docker.build "${IMAGE_NAME}"
-                        }
+                    dir("API/petcare"){
+                        script {
+                            docker.withRegistry('',DOCKER_PASS) {
+                                docker_image = docker.build "${IMAGE_NAME}"
+                            }
 
-                        docker.withRegistry('',DOCKER_PASS) {
-                            docker_image.push("${IMAGE_TAG}")
-                            docker_image.push('latest')
+                            docker.withRegistry('',DOCKER_PASS) {
+                                docker_image.push("${IMAGE_TAG}")
+                                docker_image.push('latest')
+                            }
                         }
                     }
                 }
@@ -60,9 +61,11 @@ pipeline {
 
         stage ('Cleanup Artifacts') {
             steps {
-                script {
-                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_NAME}:latest"
+                dir("API/petcare"){
+                    script {
+                        sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "docker rmi ${IMAGE_NAME}:latest"
+                    }
                 }
             }
         }
