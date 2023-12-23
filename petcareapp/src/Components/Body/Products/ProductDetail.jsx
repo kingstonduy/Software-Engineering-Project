@@ -11,6 +11,7 @@ import CommentForm from './CommentForm';
 import { useCart } from '../../CartControl/CartProvider';
 import productImg from '../../../../src/assests/homepage/product.png';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 export default function ProductDetail() {
     const [quantityValue, setQuantityValue] = useState(1);
@@ -86,12 +87,12 @@ export default function ProductDetail() {
                             stroke-linejoin="round"
                         />
                     </svg>
-                    <p className={cs['to-product-name']}>
+                    <Typography  variant='h3' textAlign='center' style={{ textTransform: 'capitalize'}} >
                         {/* {product.productName?.length > 20
                             ? `${product.productName.slice(0, 50)} ...`
                             : product.productName} */}
                         {product.productCategory}
-                    </p>
+                    </Typography>
                 </div>
                 <div className={cs['body_product']}>
                     <div className={cs['row']}>

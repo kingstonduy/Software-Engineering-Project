@@ -55,7 +55,7 @@ export default function Product({ data }) {
                     <p className={cs['price-after']}>${productPrice}</p>
                     {/* <p className={cs['price-before']}>$786.85</p> */}
                 </div>
-                <div className={cs['rating']}>
+                {/* <div className={cs['rating']}>
                     <div className={cs['stars']}>
                         {maxStars.map(() => (
                             <svg
@@ -73,7 +73,7 @@ export default function Product({ data }) {
                         ))}
                     </div>
                     <div className={cs['reviews']}>(100 Reviews)</div>
-                </div>
+                </div> */}
                 <button onClick={handleAddToCart} className={cs['add-to-cart']}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28" fill="none">
                         <path

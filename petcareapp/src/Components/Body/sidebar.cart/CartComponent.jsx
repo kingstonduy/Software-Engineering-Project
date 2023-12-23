@@ -31,16 +31,17 @@ const CartComponent = () => {
         setCart(cartContext.cart);
     }, [cartContext.cart]);
 
-    const handlePlusClick = async (product) => {
+    const handlePlusClick = async  (product) => {
         console.log(product);
-        await cartContext.updagePlusQuantityItemOnCart(product);
+        await cartContext.updatePlusQuantityItemOnCart(product);
     };
 
     const handleMinusClick = async (product) => {
+        console.log('minus')
         await cartContext.updateMinusQuantityItemOnCart(product);
     };
 
-    const handleDelteClick = async (product) => {
+    const handleDeleteClick = async (product) => {
         await cartContext.deleteItemOnCart(product);
     };
 
@@ -106,7 +107,7 @@ const CartComponent = () => {
                                                     </div>
                                                     <button
                                                         className={cs['remove-btn']}
-                                                        onClick={() => handleDelteClick(v)}
+                                                        onClick={() => handleDeleteClick(v)}
                                                     >
                                                         remove
                                                     </button>
