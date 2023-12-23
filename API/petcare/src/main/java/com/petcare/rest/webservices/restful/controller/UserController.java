@@ -4,9 +4,16 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.petcare.rest.webservices.restful.model.OrderedProductDTO;
+import com.petcare.rest.webservices.restful.model.OtpVerificationRequest;
 import com.petcare.rest.webservices.restful.model.User;
 import com.petcare.rest.webservices.restful.model.UserChangeInformation;
 import com.petcare.rest.webservices.restful.service.UserService;
@@ -48,6 +55,15 @@ public class UserController {
     public ResponseEntity<User> Register(@RequestBody User userRegister){
        User user = userService.register(userRegister);
         if(user != null){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<User> verify(@RequestBody OtpVerificationRequest otpVerificationRequest){
+        boolean isVerified = userService.verfifyOtp(otpVerificationRequest);
+        if(isVerified){
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();

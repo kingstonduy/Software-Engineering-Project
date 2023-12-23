@@ -9,4 +9,5 @@ import com.petcare.rest.webservices.restful.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findByUserUserNameAndUserPassword(String userUsername, String userPassword);
     public User findByUserUserName(String userUsername);
+    public void deleteUserByUserUserName(String userUsername);
 }

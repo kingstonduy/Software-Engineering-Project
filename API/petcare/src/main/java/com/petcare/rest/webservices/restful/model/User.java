@@ -42,6 +42,16 @@ public class User {
 
     private String userRole;
 
+    private String otp;
+
+    private long otpTS;
+
+    private boolean isVerified = false;
+
+    public boolean getIsVerified() {
+        return isVerified;
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cart> cartList;
 

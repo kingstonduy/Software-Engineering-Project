@@ -1,14 +1,19 @@
 package com.petcare.rest.webservices.restful.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.petcare.rest.webservices.restful.model.OrderedProduct;
 import com.petcare.rest.webservices.restful.model.OrderedProductDTO;
+import com.petcare.rest.webservices.restful.model.OtpRequest;
+import com.petcare.rest.webservices.restful.model.OtpVerificationRequest;
 import com.petcare.rest.webservices.restful.model.User;
 import com.petcare.rest.webservices.restful.model.UserChangeInformation;
 import com.petcare.rest.webservices.restful.repository.OrderedProductRepository;
@@ -23,6 +28,9 @@ public class UserService {
     UserRepository userRepository;
     OrderedProductRepository OrderedProductRepository;
     ProductRepository productRepository;
+
+    @Autowired
+    EmailSenderService emailService;
 
 
     // Constructor
@@ -49,17 +57,61 @@ public class UserService {
 
     public boolean login(@RequestBody User userRequest) {
         User user = userRepository.findByUserUserNameAndUserPassword(userRequest.getUserUserName(), userRequest.getUserPassword());
-        return user != null;
+        return user != null && user.getIsVerified() == true;
 
     }
 
-    public User register(@RequestBody User userRegister){
-        User saveUser = userRepository.findByUserUserName(userRegister.getUserUserName());
-        if(saveUser == null){
-            userRepository.save(userRegister);
-            return userRegister;
+    public User register(@RequestBody User user){
+        // save a OTP version to db
+        // then response an version without otp
+        User savedUser = userRepository.findByUserUserName(user.getUserUserName());
+
+        if(savedUser == null) {
+            String otp = getOtp();
+
+            user.setOtp(otp);
+            user.setOtpTS(getOtpTS());
+            user.setVerified(false);
+            userRepository.save(user);
+
+            emailService.sendEmail(new OtpRequest(user.getUserUserName(), user.getUserEmail(), otp));
+            return user;
+        } else if(savedUser.getIsVerified() == false) {
+            return resendOtp(savedUser);
+        } else {
+            return null;
         }
-        return null;
+    }
+
+    public User resendOtp(@RequestBody User user) {
+        User savedUser = userRepository.findByUserUserName(user.getUserUserName());
+        savedUser.setOtp(getOtp());
+        savedUser.setOtpTS(getOtpTS());
+        savedUser.setVerified(false);
+
+        userRepository.deleteUserByUserUserName(user.getUserUserName());
+        userRepository.save(savedUser);
+        return savedUser;
+    }
+
+    public boolean verfifyOtp(@RequestBody OtpVerificationRequest otpVerificationRequest) {
+        User user = userRepository.findByUserUserName(otpVerificationRequest.getUserUserName());
+        if(user != null) {
+            if(user.getOtp().equals(otpVerificationRequest.getOtp())) {
+                long otpTS = otpVerificationRequest.getTs();
+                long now = getOtpTS();
+
+                // set expiration time 5 minutes
+                System.out.println("now" + now);
+                System.out.println("otpTS" + otpTS);
+                if(now - otpTS < 5 * 60 * 1000) {
+                    user.setVerified(true);
+                    userRepository.save(user);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public List<OrderedProductDTO> getOrderedProductEachUser(String username){
@@ -121,6 +173,23 @@ public class UserService {
         return null;
     }
 
+    private String getOtp() {
+        List<String>digits = new ArrayList<>(Arrays.asList("0","1","2","3","4","5","6","7","8","9"));
 
+        String res = "";
+
+        for(int i = 1; i <= 6; i++) {
+            int index = (int)(Math.random() * digits.size());
+            res += digits.get(index);
+        }
+
+        return res;
+    }
+
+    private long getOtpTS() {
+        Instant instant = Instant.now();  
+        long timeStampMillis = instant.toEpochMilli();
+        return timeStampMillis;
+    }
 
 }
