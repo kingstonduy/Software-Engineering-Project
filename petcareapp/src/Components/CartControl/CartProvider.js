@@ -39,7 +39,7 @@ export default function CartProvider({children}){
         }
     }
 
-    async function updagePlusQuantityItemOnCart(product) {
+    async function updatePlusQuantityItemOnCart(product) {
         
         try{
             const cartDTO = {
@@ -137,7 +137,7 @@ export default function CartProvider({children}){
     
     return(
         <CartContext.Provider value={{cart, setCart, isCartOpen, setIsCartOpen , 
-        getProduct, updagePlusQuantityItemOnCart, updateMinusQuantityItemOnCart, 
+        getProduct, updatePlusQuantityItemOnCart, updateMinusQuantityItemOnCart, 
         deleteItemOnCart, addFromProductToCart, AddFromCartToOrderedProduct,addFromProductToCartInProductDetail}}>
             {children}
         </CartContext.Provider>

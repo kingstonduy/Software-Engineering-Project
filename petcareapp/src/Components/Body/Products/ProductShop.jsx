@@ -5,6 +5,7 @@ import { Switch } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 import Product from './Product';
 import { checkLogin, getUsers } from '../../apiClient/UserApi';
+import { Box, Pagination } from '@mui/material';
 import { useAuth } from '../../security/AuthContext';
 import { getProductByConstraint, getProductByInStock, getProducts } from '../../apiClient/ProductApi';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +19,8 @@ export default function ProductShop() {
 
     const [loading, setLoading] = useState(true); // Start with loading set to true
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(16);
+    const [productsPerPage] = useState(18);
+    const productPage = Math.ceil(products.length / productsPerPage);
 
     useEffect(() => {
         window.scrollTo({
@@ -27,7 +29,7 @@ export default function ProductShop() {
             behavior: 'smooth',
         });
         setLoading(true);
-        paginate(1);
+        // handleChangePage(1)
         retrieveProducts();
         setTimeout(() => {
             setLoading(false);
@@ -86,13 +88,24 @@ export default function ProductShop() {
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-    const paginate = (pageNumber) => {
+    // const paginate = (pageNumber) => {
+    //     window.scrollTo({
+    //         top: 50,
+    //         left: 0,
+    //         behavior: 'smooth',
+    //     });
+    //     setCurrentPage(pageNumber);
+    //     console.log(currentPage)
+    // };
+
+    const handleChangePage = (event, value) => {
         window.scrollTo({
             top: 50,
             left: 0,
             behavior: 'smooth',
         });
-        setCurrentPage(pageNumber);
+
+        setCurrentPage(value);
     };
 
     return (
@@ -134,9 +147,28 @@ export default function ProductShop() {
                         <Product key={product.id} data={product} />
                     ))}
                 </div>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        marginTop:'70px',
+                    }}
+                >
+                    <Pagination
+                        count={productPage}
+                        shape="rounded"
+                        size="large"
+                        color="primary"
+                        sx={{
+                            fontWeight: 'bold',
+                        }}
+                        page={currentPage}
+                        onChange={handleChangePage}
+                    />
+                </Box>
             </div>
 
-            <div className={cs['pagination']}>
+            {/* <div className={cs['pagination']}>
                 <div className={cs['pagination-wrap']}>
                     {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
                         <button
@@ -148,7 +180,7 @@ export default function ProductShop() {
                         </button>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             {loading ? (
                 <div className={cs['spinner-overlay']}>

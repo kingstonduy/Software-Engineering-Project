@@ -41,7 +41,12 @@ export default function Checkout() {
                                 <>
                                     <div className={`${cs['table-row']} ${cs['black-line']}`}>
                                         <div className={cs['product-main-group']}>
-                                            <div className={cs['avatar-img']}>
+                                            <div
+                                                className={cs['avatar-img']}
+                                                // style={{
+                                                //   objectFit: 'contain'
+                                                // }}
+                                            >
                                                 <img src={item.cartDTOImageUrl} alt="" />
                                             </div>
 
@@ -71,7 +76,8 @@ export default function Checkout() {
                     <div className={cs['ingredient-price-container']}>
                         <div className={cs['ingredient-price']}>
                             <div className={`${cs['col-3']}  ${cs['centered-text']}`}>Subtotal</div>
-                            <div className={`${cs['col-4']}  ${cs['centered-text']}`}>$
+                            <div className={`${cs['col-4']}  ${cs['centered-text']}`}>
+                                $
                                 {products.reduce(
                                     (total, item) =>
                                         total + parseFloat(item.cartDTOPrice) * parseFloat(item.cartDTOQuantity),

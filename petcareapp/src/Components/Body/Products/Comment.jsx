@@ -20,7 +20,7 @@ export default function Comment({ data }) {
                 <div className={cs['userDetail_DescriptionWrap']}>
                     <p className={cs['userDetail_Description']}>{commentDescription} </p>
                 </div>
-                <div className={cs['react-reply']}>
+                {/* <div className={cs['react-reply']}>
                     <div className={cs['like']}>
                         <FontAwesomeIcon icon={faThumbsUp} className={cs['icon']} />
                         48
@@ -30,7 +30,7 @@ export default function Comment({ data }) {
                         2
                     </div>
                     <p className={cs['reply']}>Reply</p>
-                </div>
+                </div> */}
             </div>
         </div>
     );
