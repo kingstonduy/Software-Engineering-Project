@@ -1,37 +1,49 @@
 import cs from './Home.module.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PetHuman from '../../../../src/assests/homepage/pethuman.png';
 import FeatureProducts from '../../../../src/assests/homepage/featureproducts.png';
 import Product from '../../../../src/assests/homepage/product.png';
 import Benefits from '../../../../src/assests/homepage/benefits.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaw } from '@fortawesome/free-solid-svg-icons';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import avaDuy from '../../../assests/ava/ava_duy.jpg';
-import avaNghia from '../../../assests/ava/ava_nghia.jpg';
-import avaDinh from '../../../assests/ava/ava_dinh.jpg';
-import avapetcare from '../../../assests/ava/doctorava.png';
+
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useCookies } from 'react-cookie';
 import { useAuth } from '../../security/AuthContext';
-
+// import Carousel from 'nuka-carousel';
+// import { renderCenterLeftControls, renderCenterRightControls } from '../../carouselCard/carouselCard';
+// import { getProductByConstraint, getProducts } from '../../apiClient/ProductApi';
+// import { Box, Button, Card, CardActions, CardContent, Container, Typography } from '@mui/material';
 const maxStars = [1, 1, 1, 1, 1];
 
 export default function Home() {
     const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
     const authContext = useAuth();
+    const navigate = useNavigate();
+    // product API
+    // const [products, setProducts] = useState([]);
 
     useEffect(() => {
         if (cookies.username && cookies.password) {
             authContext.setAuthenticated(true);
         }
+        // retrieveProducts();
     }, []);
+
+    // async function retrieveProducts() {
+    //     await getProducts()
+    //         .then((response) => setProducts(response))
+    //         .catch((error) => console.log(error));
+    // }
 
     function handleClickEmergencyCall() {
         window.scrollTo(0, 100000);
         alert('Enter Phone Number In Our Contact Info');
     }
+
+    const handleMoreDetail = () => {
+        console.log('test');
+        navigate('/Products/all');
+    };
 
     return (
         <div className={cs['wrapper']}>
@@ -114,7 +126,9 @@ export default function Home() {
                             </svg>
                         </div>
                     </div>
-                    <Link to='/Products/all' className={cs['shopping-button']}>Shop now</Link>
+                    <Link to="/Products/all" className={cs['shopping-button']}>
+                        Shop now
+                    </Link>
                 </div>
                 {/* <div className={cs['dashed-line']}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="761" height="413" viewBox="0 0 761 413" fill="none">
@@ -238,6 +252,24 @@ export default function Home() {
                     </defs>
                 </svg>
             </div>
+            {/* 
+            <Carousel
+                className="carousel_wrapper"
+                renderCenterLeftControls={renderCenterLeftControls}
+                renderCenterRightControls={renderCenterRightControls}
+                renderBottomCenterControls={null}
+                animation="zoom"
+                wrapAround
+                cellAlign="center"
+                // slidesToShow={SlideToShowNumber}
+                cellSpacing={8}
+                style={{ height: '700px' }}
+            >
+                {products.map((product) => (
+                    <Product key={product.id} data={product.data} />
+                ))}
+            </Carousel> */}
+
             <div className={cs['products-container']}>
                 <div className={cs['product-card']}>
                     <div className={cs['product-img']}>
@@ -248,7 +280,7 @@ export default function Home() {
                         <p className={cs['price-after']}>$554.00</p>
                         <p className={cs['price-before']}>$786.85</p>
                     </div>
-                    <div className={cs['rating']}>
+                    {/* <div className={cs['rating']}>
                         <div className={cs['stars']}>
                             {maxStars.map(() => (
                                 <svg
@@ -266,7 +298,7 @@ export default function Home() {
                             ))}
                         </div>
                         <div className={cs['reviews']}>(100 Reviews)</div>
-                    </div>
+                    </div> */}
                     <button className={cs['add-to-cart']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28" fill="none">
                             <path
@@ -277,6 +309,7 @@ export default function Home() {
                         Add to Cart
                     </button>
                 </div>
+
                 <div className={cs['product-card-center']}>
                     <div className={cs['product-img']}>
                         <img src={Product} alt=""></img>
@@ -286,7 +319,7 @@ export default function Home() {
                         <p className={cs['price-after']}>$554.00</p>
                         <p className={cs['price-before']}>$786.85</p>
                     </div>
-                    <div className={cs['rating']}>
+                    {/* <div className={cs['rating']}>
                         <div className={cs['stars']}>
                             {maxStars.map(() => (
                                 <svg
@@ -304,7 +337,7 @@ export default function Home() {
                             ))}
                         </div>
                         <div className={cs['reviews']}>(100 Reviews)</div>
-                    </div>
+                    </div> */}
                     <button className={cs['add-to-cart']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 28" fill="none">
                             <path
@@ -315,6 +348,7 @@ export default function Home() {
                         Add to Cart
                     </button>
                 </div>
+
                 <div className={cs['product-card']}>
                     <div className={cs['product-img']}>
                         <img src={Product} alt=""></img>
@@ -324,7 +358,7 @@ export default function Home() {
                         <p className={cs['price-after']}>$554.00</p>
                         <p className={cs['price-before']}>$786.85</p>
                     </div>
-                    <div className={cs['rating']}>
+                    {/* <div className={cs['rating']}>
                         <div className={cs['stars']}>
                             {maxStars.map(() => (
                                 <svg
@@ -342,7 +376,7 @@ export default function Home() {
                             ))}
                         </div>
                         <div className={cs['reviews']}>(100 Reviews)</div>
-                    </div>
+                    </div> */}
                     <button className={cs['add-to-cart']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28" fill="none">
                             <path
@@ -354,7 +388,10 @@ export default function Home() {
                     </button>
                 </div>
             </div>
-            <button className={cs['more-details']}>More Details</button>
+            <button className={cs['more-details']} onClick={() => handleMoreDetail()}>
+                More Details
+            </button>
+
             <img src={Benefits} alt="" className={cs['benefits']}></img>
             <div className={cs['features-container']}>
                 <div className={cs['feature']}>
