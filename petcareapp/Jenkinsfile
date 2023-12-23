@@ -22,7 +22,11 @@ pipeline {
                 cleanWs()
             }
         }
-
+        stage("Checkout from SCM"){
+            steps {
+                git branch: 'uat', credentialsId: 'github', url: 'https://github.com/HCMIU-Software-Engineering/Software-Engineering-Project'
+            }
+        }
 
         stage("Build & Push Docker Image") {
                 steps {
