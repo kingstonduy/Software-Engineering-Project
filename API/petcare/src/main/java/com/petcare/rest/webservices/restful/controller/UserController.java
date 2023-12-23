@@ -51,13 +51,27 @@ public class UserController {
     public User getUserbyUsernameAndPassword(@PathVariable String username, @PathVariable String password){
         return userService.getUserbyUsernameAndPassword(username,password);
     }
+
     @PostMapping("/register")
-    public ResponseEntity<User> Register(@RequestBody User userRegister){
-       User user = userService.register(userRegister);
-        if(user != null){
-            return ResponseEntity.ok().build();
+    public ResponseEntity<User> Register(@RequestBody User userRegister) {
+        try {
+            userService.register(userRegister);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.badRequest().build();
+        
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/resendOtp")
+    public ResponseEntity<Boolean> resendOtp(@RequestBody User userRegister) throws Exception {
+        try {
+            userService.resendOtp(userRegister);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @PostMapping("/verify")

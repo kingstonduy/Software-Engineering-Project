@@ -15,10 +15,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -42,10 +44,13 @@ public class User {
 
     private String userRole;
 
+    @Column(nullable =  true)
     private String otp;
 
+    @Column(nullable =  true, columnDefinition = "bigint default 0")
     private long otpTS;
 
+    @Column(nullable =  true , columnDefinition = "boolean default false")
     private boolean isVerified = false;
 
     public boolean getIsVerified() {
@@ -73,9 +78,9 @@ public class User {
                 ", userPassword='" + userPassword + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userRole='" + userRole + '\'' +
-                ", cartList=" + cartList +
-                ", orderedProductsList=" + orderedProductsList +
-                ", comments=" + comments +
+                ", otp='" + otp + '\'' +
+                ", otpTS=" + otpTS +
+                ", isVerified=" + isVerified +
                 '}';
     }
 }

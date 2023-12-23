@@ -46,8 +46,10 @@ public class EmailSenderService {
         props.put("mail.smtp.auth", emailConfig.getAUTH());
         props.put("mail.smtp.port", emailConfig.getPORT());
 
-        Message message = new MimeMessage(Session.getDefaultInstance(props, authentication));
-        
+       
+        Message message = new MimeMessage(Session.getInstance(props, authentication));
+        System.out.println("💡💡💡💡");
+
         try {
             message.setFrom(new InternetAddress(emailConfig.getUSERNAME()));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(otpRequest.getUserEmail(), true));

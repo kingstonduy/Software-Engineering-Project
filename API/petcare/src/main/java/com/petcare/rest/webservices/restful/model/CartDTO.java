@@ -22,15 +22,15 @@ public class CartDTO {
 
     private String cartDTOImageUrl;
 
-    @Override
-    public String toString() {
-        return "CartDTO{" +
-                "cartDTOId=" + cartDTOId +
-                ", cartDTOName='" + cartDTOName + '\'' +
-                ", cartDTOQuantity=" + cartDTOQuantity +
-                ", cartDTOCategory='" + cartDTOCategory + '\'' +
-                ", cartDTOPrice=" + cartDTOPrice +
-                ", cartDTOImageUrl='" + cartDTOImageUrl + '\'' +
-                '}';
-    }
+    // @Override
+    // public String toString() {
+    //     return "CartDTO{" +
+    //             "cartDTOId=" + cartDTOId +
+    //             ", cartDTOName='" + cartDTOName + '\'' +
+    //             ", cartDTOQuantity=" + cartDTOQuantity +
+    //             ", cartDTOCategory='" + cartDTOCategory + '\'' +
+    //             ", cartDTOPrice=" + cartDTOPrice +
+    //             ", cartDTOImageUrl='" + cartDTOImageUrl + '\'' +
+    //             '}';
+    // }
 }

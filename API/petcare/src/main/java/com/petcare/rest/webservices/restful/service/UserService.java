@@ -3,10 +3,13 @@ package com.petcare.rest.webservices.restful.service;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -20,14 +23,12 @@ import com.petcare.rest.webservices.restful.repository.OrderedProductRepository;
 import com.petcare.rest.webservices.restful.repository.ProductRepository;
 import com.petcare.rest.webservices.restful.repository.UserRepository;
 
-import lombok.Data;
-
-@Service
-@Data
+@Service 
 public class UserService {
     UserRepository userRepository;
     OrderedProductRepository OrderedProductRepository;
     ProductRepository productRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     EmailSenderService emailService;
@@ -40,6 +41,7 @@ public class UserService {
         this.userRepository = userRepository;
         OrderedProductRepository = orderedProductRepository;
         this.productRepository = productRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public List<User> retrieveUsers(){
@@ -56,49 +58,67 @@ public class UserService {
     }
 
     public boolean login(@RequestBody User userRequest) {
-        User user = userRepository.findByUserUserNameAndUserPassword(userRequest.getUserUserName(), userRequest.getUserPassword());
-        return user != null && user.getIsVerified() == true;
-
+        User user = userRepository.findByUserUserName(userRequest.getUserUserName());
+        return user != null && user.getUserPassword().equals(userRequest.getUserPassword()) && user.getIsVerified();
     }
 
-    public User register(@RequestBody User user){
-        // save a OTP version to db
-        // then response an version without otp
+    public User register(@RequestBody User user) throws RuntimeException {
         User savedUser = userRepository.findByUserUserName(user.getUserUserName());
-
         if(savedUser == null) {
             String otp = getOtp();
-
-            user.setOtp(otp);
+        
+            user.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes()));
             user.setOtpTS(getOtpTS());
             user.setVerified(false);
+            
+
             userRepository.save(user);
+            
 
             emailService.sendEmail(new OtpRequest(user.getUserUserName(), user.getUserEmail(), otp));
             return user;
         } else if(savedUser.getIsVerified() == false) {
-            return resendOtp(savedUser);
+            resendOtp(savedUser);
+            return savedUser;
+
         } else {
-            return null;
-        }
+            System.out.println("User already exists");
+            throw new RuntimeException("User already exists");
+        } 
     }
 
-    public User resendOtp(@RequestBody User user) {
+    public User resendOtp(@RequestBody User user) throws RuntimeException {
         User savedUser = userRepository.findByUserUserName(user.getUserUserName());
-        savedUser.setOtp(getOtp());
-        savedUser.setOtpTS(getOtpTS());
-        savedUser.setVerified(false);
+        if(savedUser == null) {
+            throw new RuntimeException("User not found");
+        }
 
-        userRepository.deleteUserByUserUserName(user.getUserUserName());
+        String otp = getOtp();
+        otp =  Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes());
+
+        savedUser.setOtp(otp);
+        
+        savedUser.setOtpTS(getOtpTS());
+        
+        savedUser.setVerified(false);
+        userRepository.deleteById(savedUser.getId());
+
         userRepository.save(savedUser);
+        emailService.sendEmail(new OtpRequest(user.getUserUserName(), user.getUserEmail(), otp));
         return savedUser;
     }
 
     public boolean verfifyOtp(@RequestBody OtpVerificationRequest otpVerificationRequest) {
         User user = userRepository.findByUserUserName(otpVerificationRequest.getUserUserName());
+        otpVerificationRequest.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otpVerificationRequest.getOtp().getBytes()));
+
+        System.out.println("User OTP" + user.getOtp());
+        System.out.println("otpVerificationRequest" + otpVerificationRequest);
+
+
         if(user != null) {
             if(user.getOtp().equals(otpVerificationRequest.getOtp())) {
-                long otpTS = otpVerificationRequest.getTs();
+                long otpTS = user.getOtpTS();
                 long now = getOtpTS();
 
                 // set expiration time 5 minutes
@@ -158,18 +178,15 @@ public class UserService {
     }
 
     public User ChangeUserInformation(UserChangeInformation userChangeInformation){
-
         User user = userRepository.findByUserUserName(userChangeInformation.getUsername());
         System.out.println(user.getId());
         if( user != null && user.getUserPassword().equals(userChangeInformation.getCurrentPassword())){
-            System.out.println("VO DUOC DAY NE!!!!!");
             user.setUserFullName(userChangeInformation.getFullName());
             user.setUserPassword(userChangeInformation.getPassword());
             user.setUserEmail(userChangeInformation.getEmail());
             userRepository.save(user);
             return user;
         }
-        System.out.println("LOI~ ROI!!!!!!!");
         return null;
     }
 

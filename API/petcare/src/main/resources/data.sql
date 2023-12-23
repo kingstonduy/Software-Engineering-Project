@@ -1,7 +1,3 @@
-#--CAUTION h2 se tu dong doi ten column
-
-
-
 insert into userr (id , user_full_name, user_user_name, user_password, user_email, user_role)
 values
     (1001, 'Nguyen Trong Nghia', 'nghia', 'Zet411632', 'zetnguyen17@gmail.com', 'user'),
@@ -93,7 +89,7 @@ values
     (1087, 'Vo Minh Bao Hieu', 'vominhbaohieu260994260994', 'Hieu260994', 'vominhbaohieu260994260994@gmail.com', 'user'),
     (1088, 'Pham Thi Dung', 'phamthidung220190220190', 'Dung220190', 'phamthidung220190220190@gmail.com', 'user'),
     (1089, 'Pham Dinh An', 'phamDinhan070196070196', 'An070196', 'phamDinhan070196070196@gmail.com', 'user'),
-    (1090, 'Anh Nhat BAng', 'anhnhatbang061197061197', 'BAng061197', 'anhnhatbang061197061197@gmail.com', 'user'),
+    (1090, 'Anh Nhat BAng', 'anhnhatbang061197061197', 'BAng061197', 'anhnhatbang061197061197@gmail.com', 'user'),
     (1091, 'Le Van Thong', 'levanthong010995010995', 'Thong010995', 'levanthong010995010995@gmail.com', 'user'),
     (1092, 'Do Ha Thanh', 'Dohathanh090894090894', 'Thanh090894', 'Dohathanh090894090894@gmail.com', 'user'),
     (1093, 'Nguyen Thanh Hiep', 'nguyenthanhhiep160472160472', 'Hiep160472', 'nguyenthanhhiep160472160472@gmail.com', 'user'),
@@ -371,7 +367,7 @@ values
     (1365, 'Le Hoang Dung', 'lehoangdung020507020507', 'Dung020507', 'lehoangdung020507020507@gmail.com', 'user'),
     (1366, 'Mai Trung Ta', 'maitrungta220791220791', 'Ta220791', 'maitrungta220791220791@gmail.com', 'user'),
     (1367, 'Nguyen Van Dai', 'nguyenvanDai250981250981', 'Dai250981', 'nguyenvanDai250981250981@gmail.com', 'user'),
-    (1368, 'Nguyen Viatt Phuong', 'nguyenviattphuong121172121172', 'Phuong121172', 'nguyenviattphuong121172121172@gmail.com', 'user'),
+    (1368, 'Nguyen Viet Phuong', 'nguyenvietphuong121172121172', 'Phuong121172', 'nguyenvietphuong121172121172@gmail.com', 'user'),
     (1369, 'To Anh Vu', 'toanhvu210474210474', 'Vu210474', 'toanhvu210474210474@gmail.com', 'user'),
     (1370, 'Ngo Thai Son', 'ngothaison280598280598', 'Son280598', 'ngothaison280598280598@gmail.com', 'user'),
     (1371, 'Nguyen Thanh Nam', 'nguyenthanhnam050996050996', 'Nam050996', 'nguyenthanhnam050996050996@gmail.com', 'user'),
