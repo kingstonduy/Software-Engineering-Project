@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import CommentForm from './CommentForm';
 import { useCart } from '../../CartControl/CartProvider';
 import productImg from '../../../../src/assests/homepage/product.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductDetail() {
     const [quantityValue, setQuantityValue] = useState(1);
@@ -17,6 +18,7 @@ export default function ProductDetail() {
     const authContext = useAuth();
     const { id } = useParams();
     const maxStars = [1, 1, 1, 1, 1];
+    const navigate = useNavigate();
 
     const CartContext = useCart();
 
@@ -59,7 +61,15 @@ export default function ProductDetail() {
         <div className={cs['body']}>
             <div className="grid">
                 <div className={cs['path']}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 48 48" fill="none">
+                    <svg
+                        className={cs['path_home']}
+                        onClick={() => navigate('/Products/all')}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="45"
+                        height="45"
+                        viewBox="0 0 48 48"
+                        fill="none"
+                    >
                         <path
                             fill-rule="evenodd"
                             clip-rule="evenodd"
@@ -77,9 +87,10 @@ export default function ProductDetail() {
                         />
                     </svg>
                     <p className={cs['to-product-name']}>
-                        {product.productName?.length > 20
+                        {/* {product.productName?.length > 20
                             ? `${product.productName.slice(0, 50)} ...`
-                            : product.productName}
+                            : product.productName} */}
+                        {product.productCategory}
                     </p>
                 </div>
                 <div className={cs['body_product']}>

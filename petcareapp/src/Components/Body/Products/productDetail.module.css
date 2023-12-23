@@ -9,6 +9,11 @@
     gap: 10px;
     margin-top: 100px;
 }
+
+.path_home:hover {
+    cursor: pointer;
+}
+
 .to-product-name {
     color: #4c5276;
     font-family: Inter;
