@@ -69,6 +69,11 @@ header {
     align-items: center;
     gap: 10px;
 }
+
+.nav_wrap_left_logo:hover {
+    cursor: pointer;
+}
+
 .nav_logo {
     font-size: 30px;
     color: #4b5175 !important;
