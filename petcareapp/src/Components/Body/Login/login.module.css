@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 100px;
 }
 .login-form {
     display: flex;
@@ -32,7 +33,7 @@
 }
 
 .sign-in {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 .sign-in h4 {
     color: #000;
@@ -74,15 +75,27 @@
     display: flex;
     width: 436px;
     height: 44px;
-    padding: 8px 16px;
     font-size: 16px;
     align-items: center;
     gap: 227px;
-    border-radius: 4px;
-    border: 1px solid #fd7e14;
     background-color: #fff;
 }
-.password-container {
+
+.email-container, .password-container {
+    display: flex;
+    align-items: center;
+    padding: 4px 16px;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px solid #fd7e14;
+}
+
+.show-icon {
+    padding: 2px;
+}
+.show-icon:hover {
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 .remember-forgot {
