@@ -30,7 +30,8 @@
     /* margin-top: 50%; */
 }
 .name {
-    font-size: 33px;
+    font-size: 40px;
+    font-weight: 600;
     color: #4b5175;
 }
 .wrapper img {
@@ -43,8 +44,8 @@
 .register h4 {
     color: #000;
     font-family: Inter;
-    font-size: 33px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 500;
     line-height: 130%;
     text-align: center;
 }

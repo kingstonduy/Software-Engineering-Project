@@ -22,9 +22,11 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    /* margin-bottom: 20px; */
 }
 .name {
-    font-size: 33px;
+    font-size: 40px;
+    font-weight: 600;
     color: #4b5175;
 }
 .wrapper img {
@@ -37,8 +39,8 @@
 .sign-in h4 {
     color: #000;
     font-family: Inter;
-    font-size: 33px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 500;
     line-height: 130%;
     text-align: center;
 }
