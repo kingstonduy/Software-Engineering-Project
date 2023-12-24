@@ -2,38 +2,78 @@ import cs from './register.module.css';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Dog from '../../../assests/loginpage/doglogo.png';
-import DogBackGround from '../../../assests/loginpage/backgroundDog.png';
-import Background from '../../../assests/registerpage/background.png';
+import Dog from '../../../../assests/loginpage/doglogo.png';
+import DogBackGround from '../../../../assests/loginpage/backgroundDog.png';
+import Background from '../../../../assests/registerpage/background.png';
 import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { Validator } from '../../Validator/Validator';
-import { checkRegister } from '../../apiClient/UserApi';
+import { Validator } from '../../../Validator/Validator';
+import { checkRegister, verifyOTP } from '../../../apiClient/UserApi';
+import { Box, Modal, TextField, Typography, Button } from '@mui/material';
+// import { Modal, Button, Input, Form } from 'antd';
 
 export default function Register() {
+    const [userData, setUserData] = useState({});
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [fullname, setFullname] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [OTP, setOtp] = useState('');
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState(false);
+    // const [form] = Form.useForm();
 
     async function register(user) {
         try {
+            // await checkRegister(user);
             const response = await checkRegister(user);
             if (response.status == 200) {
-                console.log(response);
                 alert('Register successfully');
                 navigate('/login');
             }
         } catch (error) {
             setErrorMessage(true);
         }
+        console.log(user);
     }
 
-    const [checkInput, setCheckInput] = useState('');
+    // async function checkOTP(value) {
+    //     try {
+    //         const checking = await verifyOTP(value);
+    //         if (checking.status == 200) {
+    //             alert('Register successfully');
+    //             navigate('/Home');
+    //         }
+    //     } catch (error) {
+    //         setErrorMessage(true);
+    //     }
+    // }
+
+    // async function resendOTP(user) {
+    //     try {
+    //         await resendOTP(user);
+    //     } catch (error) {
+    //         setErrorMessage(true);
+    //     }
+    // }
+
+    // Modal
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
+    const handleInputOtpChange = (event) => {
+        setOtp(event.target.value);
+    };
+
     useEffect(() => {
         Validator(
             {
@@ -57,17 +97,19 @@ export default function Register() {
                         "It's incorrect",
                     ),
                     Validator.isEmail('#email', 'It should be in email type'),
+
+                    // Validator.isOTP('#otp', 'OTP is required'),
                 ],
                 onSubmit: function (data) {
-                    const user = {
+                    setUserData({
                         userUserName: data.username,
                         userFullName: data.fullname,
                         userPassword: data.password,
                         userEmail: data.email,
                         userRole: 'user',
-                    };
+                    });
 
-                    register(user);
+                    register(userData);
                 },
             },
             setUsername,
@@ -222,11 +264,97 @@ export default function Register() {
                             <input type="checkbox" />
                             <p className={cs['question']}>I agree with the terms of use</p>
                         </div>
+
                         <div id="form-group">
-                            <button type="submit" className="btn_form">
+                            {/* <button className="btn_form" onClick={handleOpenModal}>
+                                Sign up
+                            </button> */}
+                            <button type="submit" className="btn_form" >
                                 Sign up
                             </button>
                         </div>
+
+                        {/* <Modal open={modalOpen} onClose={handleCloseModal}>
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: 500,
+                                    height: 550,
+                                    bgcolor: 'background.paper',
+                                    boxShadow: 10,
+                                    borderRadius: 2,
+                                    p: 2,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+                                }}
+                                container
+                                component="form"
+                            >
+                                <Typography
+                                    variant="h3"
+                                    fontWeight={600}
+                                    color="#4B5175"
+                                    alignItems="center"
+                                    marginBottom={7}
+                                >
+                                    OTP confirmation
+                                </Typography>
+
+                                <TextField
+                                    required
+                                    variant="outlined"
+                                    type="password"
+                                    value={OTP}
+                                    label="Enter OTP"
+                                    sx={{
+                                        width: '80%',
+                                        fontSize: '30px',
+                                        '&.MuiOutlinedInput-notchedOutline': { fontSize: '30px' },
+                                    }}
+                                    onChange={handleInputOtpChange}
+                                />
+
+                                <Button
+                                    size="large"
+                                    variant="contained"
+                                    sx={{ width: '60%', marginTop: '20px', color: '#ffffff', fontSize: '16px' }}
+                                    onClick={() => checkOTP(OTP)}
+                                >
+                                    Submit
+                                </Button>
+                                <Button
+                                    onClick={() => resendOTP(userData)}
+                                    sx={{ marginTop: '10px', fontSize: '14px' }}
+                                >
+                                    Resend OTP
+                                </Button>
+                            </Box>
+                        </Modal> */}
+
+                        {/* <Modal
+                            open={modalOpen}
+                            title=""
+                            onOk={handleCloseModal}
+                            onCancel={handleCloseModal}
+                            footer={(_, { OkBtn, CancelBtn }) => (
+                                <>
+                                    <Button>Custom Button</Button>
+                                    <CancelBtn />
+                                    <OkBtn />
+                                </>
+                            )}
+                        >
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                        </Modal> */}
                     </form>
                     <div className={cs['other-account-container']}>
                         <p>or sign up with other accounts?</p>

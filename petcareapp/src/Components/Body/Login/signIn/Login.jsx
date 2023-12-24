@@ -1,11 +1,11 @@
 import cs from './login.module.css';
-import '../Login/login.css';
+import './login.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Background from '../../../assests/loginpage/background.png';
+import Background from '../../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
-import { Validator } from '../../Validator/Validator';
-import { useAuth } from '../../security/AuthContext';
+import { Validator } from '../../../Validator/Validator';
+import { useAuth } from '../../../security/AuthContext';
 
 import { useCookies } from 'react-cookie';
 import { Grid } from '@mui/material';

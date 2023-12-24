@@ -1,5 +1,5 @@
 import React from 'react';
-import Register from '../Body/Login/Register';
+import Register from '../Body/Login/signUp/Register';
 
 export const SignUpLayout = () => {
     return (
