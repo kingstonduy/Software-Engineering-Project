@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.petcare.rest.webservices.restful.model.AuthenticationResponse;
 import com.petcare.rest.webservices.restful.model.OrderedProductDTO;
 import com.petcare.rest.webservices.restful.model.OtpVerificationRequest;
 import com.petcare.rest.webservices.restful.model.User;
@@ -37,12 +38,14 @@ public class UserController {
         return userService.getUserbyUsername(username);
     }
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User userRequest) {
-        boolean ok = userService.login(userRequest);
-        if (ok == true) {
-            return ResponseEntity.ok().build();
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody User userRequest) {
+        AuthenticationResponse ok = userService.login(userRequest);
+        System.out.println("login is called sth:" + userRequest);
+        System.out.println(ok);
+        if (ok != null) {
+            return ResponseEntity.ok().body(ok);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

@@ -154,6 +154,16 @@ Validator.isEmail = function (selector, message) {
 	};
 };
 
+Validator.isPhoneNumber = function (selector, message) {
+	return {
+		selector: selector,
+		test: function (value) {
+			var regex = /((^(\+84|84|0|0084){1})(3|5|7|8|9))+([0-9]{8})$/;
+			return regex.test(value) ? undefined : message || 'Trường này phải là sdt';
+		},
+	};
+};
+
 Validator.minLength = function (selector, min, message) {
 	return {
 		selector: selector,

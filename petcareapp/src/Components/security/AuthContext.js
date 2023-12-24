@@ -19,6 +19,7 @@ export default function AuthProvider({children}){
     async function login(user){
             try{
                 const response = await checkLogin(user)
+                console.log(response.data)
                 if(response.status == 200){
                     setAuthenticated(true)
                     setUsername(user.userUserName)
@@ -26,9 +27,9 @@ export default function AuthProvider({children}){
                 }
             }
             catch(error){
+                console.log(error)
                 return false;
             }
-       
     }
 
     function logout(){
