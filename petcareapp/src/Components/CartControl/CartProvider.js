@@ -50,13 +50,12 @@ export default function CartProvider({children}){
         }
         catch(error){
             console.log(error)
-            alert('error while update quantity')
+            alert('Error while updating quantity')
         }
         setAction(action+1)
     }
 
     async function updateMinusQuantityItemOnCart(product) {
-        setAction(action-1)
         try{
             const cartDTO = {
                 'cartDTOId': product.cartDTOId,
@@ -68,16 +67,16 @@ export default function CartProvider({children}){
             console.log(error)
             alert('error while update quantity')
         }
+        setAction(action-1)
     }
 
     async function deleteItemOnCart(product) {
-        console.log('click r ne')
         try{
-             const  response= await deleteCartItem(product.cartDTOId) // api
+             const  response = await deleteCartItem(product.cartDTOId) // api
         }
         catch(error){
             console.log(error)
-            alert('error while delete item on cart')
+            alert('Error while deleting item on cart')
         }
         setAction(action+1)
     }
@@ -90,7 +89,7 @@ export default function CartProvider({children}){
         }
         try{
             const  response =  await addProductOnCart(addToCartRequest)
-            alert('add to cart success')
+            alert('Add to cart successfully')
             setIsCartOpen(false)
         }
         catch(error){
@@ -107,7 +106,7 @@ export default function CartProvider({children}){
         }
         try{
             const  response =  await addProductOnCart(addToCartRequest)
-            alert('add to cart success')
+            alert('Add to cart successfully')
             setIsCartOpen(false)
         }
         catch(error){
@@ -123,17 +122,13 @@ export default function CartProvider({children}){
         catch(error)
         {
             console.log(error)
-            console.log('Error when flush cart item to ordered product')
+            console.log('Error when flushing cart item to ordered product')
         }
         setIsCartOpen(false)
         setAction(action+1)
     }
     
 
-    
-    
-    
-   
     
     return(
         <CartContext.Provider value={{cart, setCart, isCartOpen, setIsCartOpen , 

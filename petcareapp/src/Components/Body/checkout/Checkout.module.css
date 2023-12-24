@@ -7,7 +7,7 @@
 }
 
 .products-table {
-    padding: 100px 200px 0px 200px;
+    padding: 100px 150px;
 }
 
 .table-header {
@@ -110,11 +110,13 @@
     align-items: center;
 
     font-family: Inter;
-    font-size: 18px;
-    font-weight: 500;
     line-height: 38px;
 }
-
+.product-price, .product-quantity {
+    font-size: 25px;
+    font-weight: 500;
+    color: #4c5276;
+}
 .ingredient-price-container {
     border-bottom: 1px solid #adb5bd;
     padding: 20px 0;
@@ -194,8 +196,6 @@
     align-items: center;
 
     font-family: Inter;
-    font-size: 18px;
-    font-weight: 500;
     line-height: 38px;
 }
 

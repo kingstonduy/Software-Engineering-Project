@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useCart } from '../../CartControl/CartProvider';
 import { useAuth } from '../../security/AuthContext';
 import cs from './Checkout.module.css';
@@ -15,6 +16,14 @@ export default function Checkout() {
         alert('Buy successfully. Thank you for your purchase');
         navigation('/Home');
     };
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, []);
 
     return (
         <div className={cs['body']}>
@@ -47,7 +56,7 @@ export default function Checkout() {
 
                                             <div className={cs['name-type']}>
                                                 <div className={cs['product-name']}>{item.cartDTOName}</div>
-                                                <div className={cs['product-type']}>{item.cartDTOCategory}</div>
+                                                <div className={cs['product-type']}>Type of product: {item.cartDTOCategory}</div>
                                             </div>
                                         </div>
 

@@ -36,7 +36,7 @@ export default function MainApp(){
                                 <Route path='/Bird' element={<Bird/>}/>
                                 <Route path='/Hamster' element={<Hamster/>}/>
                                 <Route path='/Account' element={<Account/>}/>
-                                <Route path='/Products/:type' element={<ProductShop />} />
+                                <Route path='/Products/:type' element={<ProductShop/>} />
                                 <Route path='/Login' element={<Login/>}/>
                                 <Route path='/Register' element={<Register/>}/>
                                 <Route path='/login' element={<Login/>}/>

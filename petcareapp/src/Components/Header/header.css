@@ -33,7 +33,7 @@ header {
     justify-content: space-around;
     list-style: none;
     height: 100%;
-    margin-left: 150px;
+    margin-left: 80px;
 }
 
 .nav_left_item {
@@ -77,7 +77,7 @@ header {
 .nav_right_list {
     display: flex;
     align-items: center;
-
+    gap: 15px;
     list-style: none;
     margin-right: 50px;
 }
@@ -167,7 +167,7 @@ header {
 .log-out-icon {
     font-size: 25px;
     color: #fd7e14;
-    margin-left: 30px;
+    margin-left: 45px;
 }
 
 .log-out-icon:hover {
