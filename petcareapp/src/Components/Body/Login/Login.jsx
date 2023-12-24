@@ -6,9 +6,10 @@ import Background from '../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
 import { useAuth } from '../../security/AuthContext';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { useCookies } from 'react-cookie';
-import { Grid } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -21,6 +22,8 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState(false);
 
     const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         Validator({
@@ -61,6 +64,11 @@ export default function Login() {
 
     function handleForgotPassword() {
         alert('Good luck next time !!!');
+    }
+
+    function handleShowPassword() {
+        // Toggle the state to show or hide the password
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     }
 
     return (
@@ -104,30 +112,35 @@ export default function Login() {
                     )}
                     {console.log(errorMessage)}
                     <div id="form_login" className={cs['sign-in-frame']}>
-                        <div id="form-group" className={cs['email-container']}>
+                        <div id="form-group">
                             <p className={cs['email']}>Username</p>
-                            <input
-                                type="text"
-                                className="form-control" //{cs['email-input']}
-                                value={username}
-                                placeholder="username"
-                                name="username"
-                                id="username"
-                                onChange={handleOnchangeUsername}
-                            />
+                            <div className={cs['email-container']}>
+                                <input
+                                    type="text"
+                                    className="form-control" //{cs['email-input']}
+                                    value={username}
+                                    placeholder="Enter your username"
+                                    name="username"
+                                    id="username"
+                                    onChange={handleOnchangeUsername}
+                                />
+                            </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" className={cs['password-container']}>
+                        <div id="form-group">
                             <p className={cs['password']}>Password</p>
-                            <input
-                                type="password"
-                                className="form-control" //{cs['password-input']}
-                                value={password}
-                                placeholder="password"
-                                name="password"
-                                id="password"
-                                onChange={handleOnchangePassword}
-                            />
+                            <div className={cs['password-container']}>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    className="form-control" //{cs['password-input']}
+                                    value={password}
+                                    placeholder="Enter your password"
+                                    name="password"
+                                    id="password"
+                                    onChange={handleOnchangePassword}
+                                />
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} className={cs['show-icon']}/>
+                            </div>
                             <span className="form-message"></span>
                         </div>
                         <div className={cs['remember-forgot']}>
@@ -295,12 +308,6 @@ export default function Login() {
                 </form>
             </div>
             <img src={Background} alt=""></img>
-            {/* <Grid container spacing={0}>
-                <Grid xs={6} item >
-                    
-                </Grid>
-                <Grid xs={6} item />
-            </Grid> */}
         </div>
     );
 }
