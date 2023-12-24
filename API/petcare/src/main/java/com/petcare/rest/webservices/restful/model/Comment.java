@@ -10,9 +10,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name="comment")
@@ -41,8 +43,6 @@ public class Comment {
                 "id=" + id +
                 ", commentDescription='" + commentDescription + '\'' +
                 ", commentDate=" + commentDate +
-                ", product=" + product +
-                ", user=" + user +
                 '}';
     }
 }

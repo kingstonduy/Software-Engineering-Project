@@ -56,7 +56,8 @@ export default function Register() {
                         },
                         "It's incorrect",
                     ),
-                    Validator.isEmail('#email', 'It should be in email type'),
+                    Validator.isEmail('#email', 'Invalid email'),
+                    Validator.isPhoneNumber('#phoneno', 'Invalid phone number'),
                 ],
                 onSubmit: function (data) {
                     const user = {

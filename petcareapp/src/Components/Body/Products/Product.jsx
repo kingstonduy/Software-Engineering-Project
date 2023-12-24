@@ -46,6 +46,8 @@ export default function Product({ data }) {
 
             <Link to={`/Product/Detail/${id}`} className={cs['product-card']}>
                 <div className={cs['product-img']}>
+                    {/* <img src={productImageUrl} alt=""></img> */}
+                    {/* <img src={productImageUrl} alt=""></img> */}    
                     <img src={productImageUrl} alt=""></img>
                 </div>
                 <p className={cs['product-name']}>
@@ -53,27 +55,7 @@ export default function Product({ data }) {
                 </p>
                 <div className={cs['product-price']}>
                     <p className={cs['price-after']}>${productPrice}</p>
-                    {/* <p className={cs['price-before']}>$786.85</p> */}
                 </div>
-                {/* <div className={cs['rating']}>
-                    <div className={cs['stars']}>
-                        {maxStars.map(() => (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="32"
-                                viewBox="0 0 20 32"
-                                fill="none"
-                            >
-                                <path
-                                    d="M4.51332 25.304C4.03082 25.5515 3.48332 25.1178 3.58082 24.564L4.61832 18.6515L0.214567 14.4565C-0.196683 14.064 0.0170668 13.3465 0.568317 13.269L6.69082 12.399L9.42082 6.99026C9.66707 6.50276 10.3333 6.50276 10.5796 6.99026L13.3096 12.399L19.4321 13.269C19.9833 13.3465 20.1971 14.064 19.7846 14.4565L15.3821 18.6515L16.4196 24.564C16.5171 25.1178 15.9696 25.5515 15.4871 25.304L9.99832 22.484L4.51207 25.304H4.51332Z"
-                                    fill="#FFDA6A"
-                                />
-                            </svg>
-                        ))}
-                    </div>
-                    <div className={cs['reviews']}>(100 Reviews)</div>
-                </div> */}
                 <button onClick={handleAddToCart} className={cs['add-to-cart']}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="28" viewBox="0 0 29 28" fill="none">
                         <path

@@ -1,31 +1,57 @@
 package com.petcare.rest.webservices.restful.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.petcare.rest.webservices.restful.model.AuthenticationResponse;
 import com.petcare.rest.webservices.restful.model.OrderedProduct;
 import com.petcare.rest.webservices.restful.model.OrderedProductDTO;
+import com.petcare.rest.webservices.restful.model.OtpRequest;
+import com.petcare.rest.webservices.restful.model.OtpVerificationRequest;
 import com.petcare.rest.webservices.restful.model.User;
 import com.petcare.rest.webservices.restful.model.UserChangeInformation;
 import com.petcare.rest.webservices.restful.repository.OrderedProductRepository;
 import com.petcare.rest.webservices.restful.repository.ProductRepository;
 import com.petcare.rest.webservices.restful.repository.UserRepository;
+import com.petcare.rest.webservices.restful.security.CustomerUserDetails;
+import com.petcare.rest.webservices.restful.security.JwtTokenProvider;
 
-import lombok.Data;
-
-@Service
-@Data
+@Service 
 public class UserService {
+
     UserRepository userRepository;
     OrderedProductRepository OrderedProductRepository;
     ProductRepository productRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    EmailSenderService emailService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
     // Constructor
+
+
 
 
     public UserService(UserRepository userRepository, OrderedProductRepository orderedProductRepository, ProductRepository productRepository) {
@@ -47,19 +73,97 @@ public class UserService {
         return user;
     }
 
-    public boolean login(@RequestBody User userRequest) {
-        User user = userRepository.findByUserUserNameAndUserPassword(userRequest.getUserUserName(), userRequest.getUserPassword());
-        return user != null;
+     public AuthenticationResponse login(@RequestBody User userRequest) {
+        try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userRequest.getUserUserName(),
+                            userRequest.getUserPassword()
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            User user = userRepository.findByUserUserName(userRequest.getUserUserName());
+            
+            if(user == null || user.getIsVerified() == false){
+                return null;
+            }
+
+            String jwt = jwtTokenProvider.generateToken((CustomerUserDetails) authentication.getPrincipal());
+        
+            return new AuthenticationResponse(jwt);
+        }catch (Exception e){
+            return null;
+        }
 
     }
+    @Async
+    public User register(@RequestBody User user) throws RuntimeException {
+         // save a OTP version to db
+        // then response an version without otp
+        User savedUser = userRepository.findByUserUserName(user.getUserUserName());
+        if(savedUser == null) {
+            String otp = getOtp();
+        
+            user.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes()));
+            user.setOtpTS(getOtpTS());
+            user.setVerified(false);
+            user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+            userRepository.save(user);
 
-    public User register(@RequestBody User userRegister){
-        User saveUser = userRepository.findByUserUserName(userRegister.getUserUserName());
-        if(saveUser == null){
-            userRepository.save(userRegister);
-            return userRegister;
+            emailService.sendEmail(new OtpRequest(user.getUserUserName(), user.getUserEmail(), otp));
+
+            System.out.println("User saved");
+
+            return user;
+        } else if(savedUser.getIsVerified() == false) {
+            resendOtp(savedUser);
+            return savedUser;
+
+        } else {
+            throw new RuntimeException("User already exists");
+        } 
+    }
+
+    public User resendOtp(@RequestBody User user) throws RuntimeException {
+        User savedUser = userRepository.findByUserUserName(user.getUserUserName());
+        if(savedUser == null) {
+            throw new RuntimeException("User not found");
         }
-        return null;
+
+        String otp = getOtp();
+        otp =  Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes());
+
+        savedUser.setOtp(otp);
+        
+        savedUser.setOtpTS(getOtpTS());
+        
+        savedUser.setVerified(false);
+        userRepository.deleteById(savedUser.getId());
+
+        userRepository.save(savedUser);
+        emailService.sendEmail(new OtpRequest(user.getUserUserName(), user.getUserEmail(), otp));
+        return savedUser;
+    }
+
+    public boolean verfifyOtp(@RequestBody OtpVerificationRequest otpVerificationRequest) {
+        User user = userRepository.findByUserUserName(otpVerificationRequest.getUserUserName());
+        otpVerificationRequest.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otpVerificationRequest.getOtp().getBytes()));
+
+        if(user != null) {
+            if(user.getOtp().equals(otpVerificationRequest.getOtp())) {
+                long otpTS = user.getOtpTS();
+                long now = getOtpTS();
+
+                // set expiration time 5 minutes
+                if(now - otpTS < 5 * 60 * 1000) {
+                    user.setVerified(true);
+                    userRepository.save(user);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public List<OrderedProductDTO> getOrderedProductEachUser(String username){
@@ -106,21 +210,34 @@ public class UserService {
     }
 
     public User ChangeUserInformation(UserChangeInformation userChangeInformation){
-
         User user = userRepository.findByUserUserName(userChangeInformation.getUsername());
-        System.out.println(user.getId());
         if( user != null && user.getUserPassword().equals(userChangeInformation.getCurrentPassword())){
-            System.out.println("VO DUOC DAY NE!!!!!");
             user.setUserFullName(userChangeInformation.getFullName());
             user.setUserPassword(userChangeInformation.getPassword());
             user.setUserEmail(userChangeInformation.getEmail());
             userRepository.save(user);
             return user;
         }
-        System.out.println("LOI~ ROI!!!!!!!");
         return null;
     }
 
+    private String getOtp() {
+        List<String>digits = new ArrayList<>(Arrays.asList("0","1","2","3","4","5","6","7","8","9"));
 
+        String res = "";
+
+        for(int i = 1; i <= 6; i++) {
+            int index = (int)(Math.random() * digits.size());
+            res += digits.get(index);
+        }
+
+        return res;
+    }
+
+    private long getOtpTS() {
+        Instant instant = Instant.now();  
+        long timeStampMillis = instant.toEpochMilli();
+        return timeStampMillis;
+    }
 
 }

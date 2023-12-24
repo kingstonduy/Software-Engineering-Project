@@ -17,12 +17,9 @@ export default function AuthProvider({children}){
 
 
     async function login(user){
-
             try{
-                console.log(user)
-                console.log(checkLogin(user))
                 const response = await checkLogin(user)
-                console.log(response)
+                console.log(response.data)
                 if(response.status == 200){
                     setAuthenticated(true)
                     setUsername(user.userUserName)
@@ -30,16 +27,13 @@ export default function AuthProvider({children}){
                 }
             }
             catch(error){
-                console.log('error o day')
                 console.log(error)
                 return false;
             }
-       
     }
 
     function logout(){
         setAuthenticated(false)
-        // setToken(null)
         setUsername(null)
     }
 

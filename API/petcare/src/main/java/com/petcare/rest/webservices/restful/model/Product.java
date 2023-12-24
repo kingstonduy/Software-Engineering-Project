@@ -15,10 +15,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -40,6 +42,7 @@ public class Product {
     @Column(columnDefinition = "VARCHAR(3000)")
     private String productDescription;
 
+    @Column(columnDefinition = "VARCHAR(500)")
     private String productImageUrl;
 
     @JsonIgnore
@@ -65,9 +68,6 @@ public class Product {
                 ", productPrice=" + productPrice +
                 ", productDescription='" + productDescription + '\'' +
                 ", productImageUrl='" + productImageUrl + '\'' +
-                ", cartList=" + cartList +
-                ", orderedProductList=" + orderedProductList +
-                ", comments=" + comments +
                 '}';
     }
 }
