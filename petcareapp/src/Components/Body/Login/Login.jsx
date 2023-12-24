@@ -6,7 +6,7 @@ import Background from '../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
 import { useAuth } from '../../security/AuthContext';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,6 +22,8 @@ export default function Login() {
     const [errorMessage, setErrorMessage] = useState(false);
 
     const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         Validator({
@@ -65,7 +67,8 @@ export default function Login() {
     }
 
     function handleShowPassword() {
-
+        // Toggle the state to show or hide the password
+        setShowPassword((prevShowPassword) => !prevShowPassword);
     }
 
     return (
@@ -128,7 +131,7 @@ export default function Login() {
                             <p className={cs['password']}>Password</p>
                             <div className={cs['password-container']}>
                                 <input
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     className="form-control" //{cs['password-input']}
                                     value={password}
                                     placeholder="Enter your password"
@@ -136,7 +139,7 @@ export default function Login() {
                                     id="password"
                                     onChange={handleOnchangePassword}
                                 />
-                                <FontAwesomeIcon icon={faEye} className={cs['show-icon']} onClick={handleShowPassword}/>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} />
                             </div>
                             <span className="form-message"></span>
                         </div>
