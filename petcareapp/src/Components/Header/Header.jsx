@@ -86,7 +86,7 @@ export default function Header() {
                             <li className={`nav_left_item ${activeNavItem === 'products' ? 'active' : ''}`}>
                                 <Link
                                     className="nav_left_link"
-                                    to="Products/all"
+                                    to="Products/All"
                                     onClick={() => setActiveNavItem('products')}
                                 >
                                     Products
