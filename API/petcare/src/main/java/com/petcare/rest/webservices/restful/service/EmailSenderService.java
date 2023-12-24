@@ -23,7 +23,7 @@ public class EmailSenderService {
     // private JavaMailSender mailSender;
 
     @Autowired
-    private EmailConfig emailConfig;
+    EmailConfig emailConfig;
     
     @Autowired
     SmtpAuthenticator authentication;
