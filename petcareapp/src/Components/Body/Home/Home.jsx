@@ -403,9 +403,10 @@ export default function Home() {
                             />
                         </svg>
                     </div>
-                    <h4 className={cs['title']}>Features title</h4>
+                    <h4 className={cs['title']}>Quality</h4>
                     <p className={cs['description']}>
-                        Lorem ipsum dolor sit amet consectetur. Enim leo feugiat ut commodo amet duis faucibus.
+                        We offer high-quality products that are safe, durable, and comfortable for your pets. We only
+                        use natural ingredients and materials that are eco-friendly and cruelty-free.
                     </p>
                 </div>
                 <div className={cs['feature']}>
@@ -417,9 +418,12 @@ export default function Home() {
                             />
                         </svg>
                     </div>
-                    <h4 className={cs['title']}>Features title</h4>
+                    <h4 className={cs['title']}>Variety</h4>
                     <p className={cs['description']}>
-                        Lorem ipsum dolor sit amet consectetur. Enim leo feugiat ut commodo amet duis faucibus.
+                        We have a wide range of products to suit different needs and preferences of your pets. We have
+                        products for different types of pets, such as dogs, cats, birds, fish, reptiles, and more. We
+                        also have products for different purposes, such as grooming, training, feeding, playing, and
+                        more.
                     </p>
                 </div>
                 <div className={cs['feature']}>
@@ -431,9 +435,11 @@ export default function Home() {
                             />
                         </svg>
                     </div>
-                    <h4 className={cs['title']}>Features title</h4>
+                    <h4 className={cs['title']}>Service</h4>
                     <p className={cs['description']}>
-                        Lorem ipsum dolor sit amet consectetur. Enim leo feugiat ut commodo amet duis faucibus.
+                        We provide excellent customer service that is friendly, helpful, and responsive. We offer free
+                        delivery, easy returns, and money-back guarantee. We also have a loyalty program that rewards
+                        our customers with discounts and coupons.
                     </p>
                 </div>
                 <div className={cs['feature']}>
@@ -445,9 +451,11 @@ export default function Home() {
                             />
                         </svg>
                     </div>
-                    <h4 className={cs['title']}>Features title</h4>
+                    <h4 className={cs['title']}>Expertise</h4>
                     <p className={cs['description']}>
-                        Lorem ipsum dolor sit amet consectetur. Enim leo feugiat ut commodo amet duis faucibus.
+                        We have a team of experts who can advise you on the best products for your pets. We have
+                        veterinarians, groomers, trainers, and nutritionists who can answer your questions and give you
+                        tips on how to care for your pets.
                     </p>
                 </div>
             </div>
