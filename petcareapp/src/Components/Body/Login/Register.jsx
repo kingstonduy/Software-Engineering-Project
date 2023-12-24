@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
 import { checkRegister } from '../../apiClient/UserApi';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -20,6 +20,8 @@ export default function Login() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     async function register(user) {
         try {
@@ -106,7 +108,11 @@ export default function Login() {
     }
 
     function handleShowPassword() {
-
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    }
+    
+    function handleShowConfirmPassword() {
+        setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     }
 
     return (
@@ -211,14 +217,15 @@ export default function Login() {
                             <p className={cs['register-info']}>Password</p>
                             <div className={cs['register-info-container']}>
                                 <input
-                                    type="password"
-                                    className="form-control"
-                                    id="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    className="form-control" //{cs['password-input']}
+                                    value={password}
                                     placeholder="Enter your password"
                                     name="password"
+                                    id="password"
                                     onChange={handleOnchangePassword}
                                 />
-                                <FontAwesomeIcon icon={faEye} className={cs['show-icon']} onClick={handleShowPassword}/>
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} />
                             </div>
                             <span className="form-message"></span>
                         </div>
@@ -226,14 +233,15 @@ export default function Login() {
                             <p className={cs['register-info']}>Confirm password</p>
                             <div className={cs['register-info-container']}>
                                 <input
-                                    type="password"
+                                    type={showConfirmPassword ? 'text' : 'password'}
                                     className="form-control"
-                                    id="confirmPassword"
+                                    value={confirmPassword}
                                     placeholder="Confirm your password"
                                     name="confirmPassword"
+                                    id="confirmPassword"
                                     onChange={handleOnchangeConfirmPassword}
                                 />
-                                <FontAwesomeIcon icon={faEye} className={cs['show-icon']} onClick={handleShowPassword}/>
+                                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} onClick={handleShowConfirmPassword} />
                             </div>
                             <span className="form-message"></span>
                         </div>
