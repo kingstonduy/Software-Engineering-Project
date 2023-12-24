@@ -1,7 +1,6 @@
 package com.petcare.rest.webservices.restful.service;
 
 import java.util.Properties;
-import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -29,7 +28,7 @@ public class EmailSenderService {
     SmtpAuthenticator authentication;
 
     @Async
-    public Future<Void> sendEmail(OtpRequest otpRequest) {
+    public void sendEmail(OtpRequest otpRequest) {
         String body = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\"><title>Static Template</title><link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap\" rel=\"stylesheet\"></head><body style=\"margin:0;font-family:Poppins,sans-serif;background:#fff;font-size:14px\"><div style=\"max-width:680px;margin:0 auto;padding:45px 30px 60px;background:#f4f7ff;background-image:url(https://archisketch-resources.s3.ap-northeast-2.amazonaws.com/vrstyler/1661497957196_595865/email-template-background-banner);background-repeat:no-repeat;background-size:800px 452px;background-position:top center;font-size:14px;color:#434343\"><header><table style=\"width:100%\"><tbody><tr style=\"height:0\"><td><img alt=\"\" src=\"https://raw.githubusercontent.com/kingstonduy/Pet-Care-Website/main/DATA/images/Dog-logo.png\" height=\"100px\" background-color=\"white\"></td><td style=\"text-align:right\"><span style=\"font-size:16px;line-height:30px;color:#fff\"></span></td></tr></tbody></table></header><main><div style=\"margin:0;margin-top:70px;padding:92px 30px 115px;background:#fff;border-radius:30px;text-align:center\"><div style=\"width:100%;max-width:489px;margin:0 auto\"><h1 style=\"margin:0;font-size:24px;font-weight:500;color:#1f1f1f\">Verify Your Email</h1><p style=\"margin:0;margin-top:17px;font-size:16px;font-weight:500\">Hey " +
                 otpRequest.getUserUserName() +
                 ",</p><p style=\"margin:0;margin-top:17px;font-weight:500;letter-spacing:.56px\">Thank you for choosing Petcare E-commerce application. So we can get you started, please enter the code below on the registration page. OTP is valid for<span style=\"font-weight:600;color:#1f1f1f\"> 5 minutes</span>. Do not share this code with others, including my teammates.</p><p style=\"margin:0;margin-top:60px;font-size:40px;font-weight:600;letter-spacing:25px;color:#ba3d4f\">" +
@@ -58,10 +57,8 @@ public class EmailSenderService {
             
             Transport.send(message);
             System.out.println("Email sent successfully");
-            return null;
         } catch (MessagingException e) {
            e.printStackTrace();
-           return null;
         }
     }
 }

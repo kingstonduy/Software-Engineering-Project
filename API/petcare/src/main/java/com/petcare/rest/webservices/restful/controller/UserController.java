@@ -56,6 +56,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> Register(@RequestBody User userRegister) {
+        System.out.println("register is called sth:" + userRegister);
         try {
             userService.register(userRegister);
         } catch (RuntimeException e) {

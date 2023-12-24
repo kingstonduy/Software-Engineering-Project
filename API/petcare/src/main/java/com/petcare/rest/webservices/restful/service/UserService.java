@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -97,7 +96,7 @@ public class UserService {
         }
 
     }
-    @Async
+    
     public User register(@RequestBody User user) throws RuntimeException {
          // save a OTP version to db
         // then response an version without otp
