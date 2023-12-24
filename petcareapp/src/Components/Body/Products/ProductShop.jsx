@@ -11,12 +11,10 @@ import { useNavigate } from 'react-router-dom';
 export default function ProductShop() {
     const { type } = useParams();
     const navigate = useNavigate();
-
-    const [products, setProducts] = useState([]);
-
     const authContext = useAuth();
 
-    const [loading, setLoading] = useState(true); // Start with loading set to true
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true); 
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(16);
 
