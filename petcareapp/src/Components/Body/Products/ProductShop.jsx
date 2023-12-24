@@ -40,6 +40,8 @@ export default function ProductShop() {
         await getProductByConstraint(type)
             .then((response) => successfully(response))
             .catch((error) => console.log(error));
+
+        console.log('test')
     }
 
     function successfully(response) {
@@ -47,6 +49,7 @@ export default function ProductShop() {
     }
 
     function handleChangeSelect(e) {
+
         navigate(`/Products/${e.target.value}`);
     }
 
@@ -88,15 +91,7 @@ export default function ProductShop() {
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-    // const paginate = (pageNumber) => {
-    //     window.scrollTo({
-    //         top: 50,
-    //         left: 0,
-    //         behavior: 'smooth',
-    //     });
-    //     setCurrentPage(pageNumber);
-    //     console.log(currentPage)
-    // };
+  
 
     const handleChangePage = (event, value) => {
         window.scrollTo({

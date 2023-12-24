@@ -25,6 +25,7 @@ export const routes = [
     { path: '/Bird', component: Bird },
     { path: '/Hamster', component: Hamster },
     { path: '/Account', component: Account },
+    // { path: '/Products/All' ,component: ProductShop},
     { path: '/Products/:type', component: ProductShop },
     { path: '/Product/Detail/:id', component: ProductDetail },
     { path: '/About', component: About },
