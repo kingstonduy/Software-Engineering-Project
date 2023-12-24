@@ -295,12 +295,7 @@ export default function Login() {
                 </form>
             </div>
             <img src={Background} alt=""></img>
-            {/* <Grid container spacing={0}>
-                <Grid xs={6} item >
-                    
-                </Grid>
-                <Grid xs={6} item />
-            </Grid> */}
+           
         </div>
     );
 }

@@ -9,12 +9,20 @@ import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../../Validator/Validator';
-import { checkRegister, verifyOTP } from '../../../apiClient/UserApi';
+import { checkRegister, verifyOTP, resendOTP } from '../../../apiClient/UserApi';
 import { Box, Modal, TextField, Typography, Button } from '@mui/material';
 // import { Modal, Button, Input, Form } from 'antd';
+import { useAuth } from '../../../security/AuthContext';
+import { useCookies } from 'react-cookie';
 
 export default function Register() {
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState({
+        userUserName: '',
+        userFullName: '',
+        userPassword: '',
+        userEmail: '',
+        userRole: 'user',
+    });
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -23,41 +31,51 @@ export default function Register() {
     const [OTP, setOtp] = useState('');
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState(false);
-    // const [form] = Form.useForm();
+    const authContext = useAuth();
+    const { setCookie } = useCookies(['username', 'password']);
 
     async function register(user) {
         try {
-            // await checkRegister(user);
-            const response = await checkRegister(user);
-            if (response.status == 200) {
-                alert('Register successfully');
-                navigate('/login');
+            await checkRegister(user);
+        } catch (error) {
+            setErrorMessage(true);
+        }
+    }
+
+    async function checkOTP(value) {
+        const userDataTemp = {
+            userUserName: userData.userUserName,
+            otp: value,
+        };
+        // console.log(userDataTemp);
+        try {
+            const checking = await verifyOTP(userDataTemp);
+            if (checking.status == 200) {
+                // alert('Register successfully');
+                console.log(userData);
+                const user = {
+                    userUserName: userData.userUserName,
+                    userPassword: userData.userPassword,
+                };
+                await authContext.login(user);
+                setCookie('username', userData.userUserName);
+                setCookie('password', userData.userUserPassword);
+                navigate('/Home');
+                // navigate('/Login');
             }
         } catch (error) {
             setErrorMessage(true);
         }
-        console.log(user);
     }
 
-    // async function checkOTP(value) {
-    //     try {
-    //         const checking = await verifyOTP(value);
-    //         if (checking.status == 200) {
-    //             alert('Register successfully');
-    //             navigate('/Home');
-    //         }
-    //     } catch (error) {
-    //         setErrorMessage(true);
-    //     }
-    // }
-
-    // async function resendOTP(user) {
-    //     try {
-    //         await resendOTP(user);
-    //     } catch (error) {
-    //         setErrorMessage(true);
-    //     }
-    // }
+    async function resendOtp(data) {
+        console.log(data);
+        try {
+            await resendOTP(data);
+        } catch (error) {
+            setErrorMessage(true);
+        }
+    }
 
     // Modal
     const [modalOpen, setModalOpen] = useState(false);
@@ -97,19 +115,20 @@ export default function Register() {
                         "It's incorrect",
                     ),
                     Validator.isEmail('#email', 'It should be in email type'),
-
-                    // Validator.isOTP('#otp', 'OTP is required'),
                 ],
                 onSubmit: function (data) {
-                    setUserData({
+                    // register(data);
+
+                    const user = {
                         userUserName: data.username,
                         userFullName: data.fullname,
                         userPassword: data.password,
                         userEmail: data.email,
                         userRole: 'user',
-                    });
+                    };
 
-                    register(userData);
+                    setUserData(user);
+                    register(user);
                 },
             },
             setUsername,
@@ -269,12 +288,12 @@ export default function Register() {
                             {/* <button className="btn_form" onClick={handleOpenModal}>
                                 Sign up
                             </button> */}
-                            <button type="submit" className="btn_form" >
+                            <button type="submit" className="btn_form" onClick={handleOpenModal}>
                                 Sign up
                             </button>
                         </div>
 
-                        {/* <Modal open={modalOpen} onClose={handleCloseModal}>
+                        <Modal open={modalOpen} onClose={handleCloseModal}>
                             <Box
                                 sx={{
                                     position: 'absolute',
@@ -328,33 +347,13 @@ export default function Register() {
                                     Submit
                                 </Button>
                                 <Button
-                                    onClick={() => resendOTP(userData)}
+                                    onClick={() => resendOtp(userData)}
                                     sx={{ marginTop: '10px', fontSize: '14px' }}
                                 >
                                     Resend OTP
                                 </Button>
                             </Box>
-                        </Modal> */}
-
-                        {/* <Modal
-                            open={modalOpen}
-                            title=""
-                            onOk={handleCloseModal}
-                            onCancel={handleCloseModal}
-                            footer={(_, { OkBtn, CancelBtn }) => (
-                                <>
-                                    <Button>Custom Button</Button>
-                                    <CancelBtn />
-                                    <OkBtn />
-                                </>
-                            )}
-                        >
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                            <p>Some contents...</p>
-                        </Modal> */}
+                        </Modal>
                     </form>
                     <div className={cs['other-account-container']}>
                         <p>or sign up with other accounts?</p>
