@@ -8,6 +8,7 @@ import { Validator } from '../../Validator/Validator';
 import { useAuth } from '../../security/AuthContext';
 
 import { useCookies } from 'react-cookie';
+import { Grid } from '@mui/material';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -294,6 +295,12 @@ export default function Login() {
                 </form>
             </div>
             <img src={Background} alt=""></img>
+            {/* <Grid container spacing={0}>
+                <Grid xs={6} item >
+                    
+                </Grid>
+                <Grid xs={6} item />
+            </Grid> */}
         </div>
     );
 }

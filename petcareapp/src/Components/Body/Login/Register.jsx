@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
 import { checkRegister } from '../../apiClient/UserApi';
 
-export default function Login() {
+export default function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -105,90 +105,6 @@ export default function Login() {
     }
 
     return (
-        // <div className={cs['body']}>
-        //         <p id="lalala"></p>
-        //        <div className="grid-1400">
-        //             <div className="row">
-        //                 <div className="column3">
-        //                     <div className={cs['home_item']}>
-        //                         <h2>Taking care</h2>
-        //                         <h2>for your Smart Dog !</h2>
-
-        //                         <p className={cs['home_item_description']}>Human–canine bonding is the relationship between dogs and humans.</p>
-
-        //                         <Link to='/' className={cs['home_btn_Explore']}>{`EXPLORE MORE >`}</Link>
-
-        //                     </div>
-
-        //                 </div>
-
-        //                 <div className="column3">
-        //                     <div className={cs['home_item']}>
-        //                         <div className={cs['form_logo_wrap']}>
-        //                             <h1 className={cs['logo_petcare']}>Pet Care</h1>
-        //                         </div>
-
-        //                         <form action="" id='form_register' className='form'>
-        //                             <div className='form-group'>
-        //                                 <label htmlFor="fullname" className="form-label">Full Name</label>
-        //                                 <input value={fullname}  type="text" placeholder='Ex: Nguyen Trong Nghia' name="fullname" className='form-control' id="fullname"
-        //                                 onChange={handleOnchangeFullname}/>
-        //                                 <span className='form-message'></span>
-        //                             </div>
-
-        //                             <div className='form-group'>
-        //                                 <label htmlFor="username" className="form-label">Username</label>
-        //                                 <input value={username}  type="text" placeholder='Ex: sakurahaha123' name="username" className='form-control' id="username"
-        //                                 onChange={handleOnchangeUsername}/>
-        //                                 <span className='form-message'></span>
-        //                                 {errorMessage && <span style={{
-        //                                     color: 'red',
-        //                                     'margin-top': '15px',
-        //                                     'alignSelf': 'center'
-        //                                 }} className='form-message'>Your username has already used!</span>}
-        //                             </div>
-        //                             <div className='form-group'>
-        //                                 <label htmlFor="password" className="form-label">Password</label>
-        //                                 <input value={password}  type="password" placeholder='Ex: 123456' name="password" className='form-control' id="password"
-        //                                  onChange={handleOnchangePassword}/>
-        //                                 <span className='form-message'></span>
-        //                             </div>
-
-        //                             <div className='form-group'>
-        //                                 <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-        //                                 <input value={confirmPassword}  type="password" placeholder='Ex: 123456' name="confirmPassword" className='form-control' id="confirmPassword"
-        //                                 onChange={handleOnchangeConfirmPassword}/>
-        //                                 <span className='form-message'></span>
-        //                             </div>
-
-        //                             <div className='form-group'>
-        //                                 <label htmlFor="email" className="form-label">Email</label>
-        //                                 <input value={email}  type="email" placeholder='EMAIL' name="email" className='form-control' id="email"
-        //                                 onChange={handleOnchangeEmail}/>
-        //                                 <span className='form-message'></span>
-
-        //                             </div>
-        //                             <Link to='/login' className={cs['link_forgotPassword']}>Already have account?</Link>
-        //                             <div className='form-group'>
-        //                                 <button type="submit" className='btn_form'>Submit</button>
-        //                             </div>
-
-        //                         </form>
-        //                     </div>
-        //                 </div>
-
-        //                 <div className="column3">
-        //                     <div className={cs['home_item']}>
-        //                         <div className={cs['dogImg_wrap']}>
-        //                             <div className={cs['dog_backGround']}></div>
-
-        //                             <img src={Dog} alt="" className={cs['dog_img']} />
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //        </div>
-        // </div>
         <div className={cs['wrapper']}>
             <img className={cs['image-left']} src={Background} alt=""></img>
             <div className={cs['big-logo']}>
