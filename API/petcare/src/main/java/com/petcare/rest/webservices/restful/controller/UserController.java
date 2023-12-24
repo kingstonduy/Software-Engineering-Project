@@ -39,7 +39,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User userRequest) {
         boolean ok = userService.login(userRequest);
-        System.out.println("login is called sth:" + userRequest);
         if (ok == true) {
             return ResponseEntity.ok().build();
         } else {
@@ -92,7 +91,6 @@ public class UserController {
     @GetMapping("/user/userChangeInformation/{username}")
     public UserChangeInformation getUserChangeInformation(@PathVariable String username){
         return userService.getUserChangeInformation(username);
-
     }
 
     @PutMapping("user/userChangeInformation/update")
@@ -102,7 +100,6 @@ public class UserController {
     {
         System.out.println(userChangeInformation);
         User user = userService.ChangeUserInformation(userChangeInformation);
-        System.out.println("KO CÓ LỖI NÈEEEEE" + user.getUserFullName());
         if(user != null){
             return ResponseEntity.ok().build();
         }

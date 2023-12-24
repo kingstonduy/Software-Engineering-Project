@@ -82,7 +82,6 @@ public class UserService {
             return savedUser;
 
         } else {
-            System.out.println("User already exists");
             throw new RuntimeException("User already exists");
         } 
     }
@@ -112,18 +111,12 @@ public class UserService {
         User user = userRepository.findByUserUserName(otpVerificationRequest.getUserUserName());
         otpVerificationRequest.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otpVerificationRequest.getOtp().getBytes()));
 
-        System.out.println("User OTP" + user.getOtp());
-        System.out.println("otpVerificationRequest" + otpVerificationRequest);
-
-
         if(user != null) {
             if(user.getOtp().equals(otpVerificationRequest.getOtp())) {
                 long otpTS = user.getOtpTS();
                 long now = getOtpTS();
 
                 // set expiration time 5 minutes
-                System.out.println("now" + now);
-                System.out.println("otpTS" + otpTS);
                 if(now - otpTS < 5 * 60 * 1000) {
                     user.setVerified(true);
                     userRepository.save(user);
@@ -179,7 +172,6 @@ public class UserService {
 
     public User ChangeUserInformation(UserChangeInformation userChangeInformation){
         User user = userRepository.findByUserUserName(userChangeInformation.getUsername());
-        System.out.println(user.getId());
         if( user != null && user.getUserPassword().equals(userChangeInformation.getCurrentPassword())){
             user.setUserFullName(userChangeInformation.getFullName());
             user.setUserPassword(userChangeInformation.getPassword());
