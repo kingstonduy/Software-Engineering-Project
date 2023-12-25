@@ -209,9 +209,10 @@ public class UserService {
 
     public User ChangeUserInformation(UserChangeInformation userChangeInformation){
         User user = userRepository.findByUserUserName(userChangeInformation.getUsername());
-        if( user != null && user.getUserPassword().equals(userChangeInformation.getCurrentPassword())){
+
+        if( user != null  && checkAuthenticate(userChangeInformation.getUsername(), userChangeInformation.getCurrentPassword())){
             user.setUserFullName(userChangeInformation.getFullName());
-            user.setUserPassword(userChangeInformation.getPassword());
+            user.setUserPassword(passwordEncoder.encode(userChangeInformation.getPassword()));
             user.setUserEmail(userChangeInformation.getEmail());
             userRepository.save(user);
             return user;
@@ -236,6 +237,29 @@ public class UserService {
         Instant instant = Instant.now();  
         long timeStampMillis = instant.toEpochMilli();
         return timeStampMillis;
+    }
+
+    private boolean checkAuthenticate(String username, String password) {
+        System.out.println("password" + password);
+         try{
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            username,
+                            password
+                    )
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            User user = userRepository.findByUserUserName(username);
+            
+            if(user == null || user.getIsVerified() == false){
+                return false;
+            }
+            return true;
+        
+        }catch (Exception e){
+            return false;
+        }
     }
 
 }
