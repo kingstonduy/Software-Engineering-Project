@@ -24,14 +24,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
-                .csrf(crsf -> {
-                    crsf.ignoringRequestMatchers("/is/v1/register",
-                            "/is/v1/login",
-                            "/is/v1/resendOtp",
-                            "/is/v1/verify",
-                            "/is/v1/api-docs/**",
-                            "/is/v1/swagger-ui/**");
-                })
+//                .csrf(crsf -> {
+//                    crsf.ignoringRequestMatchers("/is/v1/register",
+//                            "/is/v1/login",
+//                            "/is/v1/resendOtp",
+//                            "/is/v1/verify",
+//                            "/is/v1/api-docs/**",
+//                            "/is/v1/swagger-ui/**");
+//                })
+                .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/is/v1/register").permitAll()
                         .requestMatchers("/is/v1/login").permitAll()
