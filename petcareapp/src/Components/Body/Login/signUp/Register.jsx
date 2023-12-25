@@ -51,17 +51,17 @@ export default function Register() {
         try {
             const checking = await verifyOTP(userDataTemp);
             if (checking.status == 200) {
-                // alert('Register successfully');
-                console.log(userData);
-                const user = {
-                    userUserName: userData.userUserName,
-                    userPassword: userData.userPassword,
-                };
-                await authContext.login(user);
-                setCookie('username', userData.userUserName);
-                setCookie('password', userData.userUserPassword);
-                navigate('/Home');
-                // navigate('/Login');
+                alert('Register successfully');
+                // console.log(userData);
+                // const user = {
+                //     userUserName: userData.userUserName,
+                //     userPassword: userData.userPassword,
+                // };
+                // await authContext.login(user);
+                // setCookie('username', userData.userUserName);
+                // setCookie('password', userData.userPassword);
+                // navigate('/Home');
+                navigate('/Login');
             }
         } catch (error) {
             setErrorMessage(true);
