@@ -131,9 +131,8 @@ public class UserService {
         }
 
         String otp = getOtp();
-        otp =  Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes());
 
-        savedUser.setOtp(otp);
+        savedUser.setOtp(Base64.getEncoder().withoutPadding().encodeToString(otp.getBytes()));
         
         savedUser.setOtpTS(getOtpTS());
         
