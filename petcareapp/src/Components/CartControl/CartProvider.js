@@ -39,7 +39,7 @@ export default function CartProvider({children}){
         }
     }
 
-    async function updagePlusQuantityItemOnCart(product) {
+    async function updatePlusQuantityItemOnCart(product) {
         
         try{
             const cartDTO = {
@@ -56,7 +56,6 @@ export default function CartProvider({children}){
     }
 
     async function updateMinusQuantityItemOnCart(product) {
-        setAction(action-1)
         try{
             const cartDTO = {
                 'cartDTOId': product.cartDTOId,
@@ -68,6 +67,7 @@ export default function CartProvider({children}){
             console.log(error)
             alert('error while update quantity')
         }
+        setAction(action-1)
     }
 
     async function deleteItemOnCart(product) {
@@ -89,6 +89,8 @@ export default function CartProvider({children}){
             username: AuthContext.username
         }
         try{
+            const token = localStorage.getItem("token");
+            console.log(token)
             const  response =  await addProductOnCart(addToCartRequest)
             alert('add to cart success')
             setIsCartOpen(false)
@@ -137,7 +139,7 @@ export default function CartProvider({children}){
     
     return(
         <CartContext.Provider value={{cart, setCart, isCartOpen, setIsCartOpen , 
-        getProduct, updagePlusQuantityItemOnCart, updateMinusQuantityItemOnCart, 
+        getProduct, updatePlusQuantityItemOnCart, updateMinusQuantityItemOnCart, 
         deleteItemOnCart, addFromProductToCart, AddFromCartToOrderedProduct,addFromProductToCartInProductDetail}}>
             {children}
         </CartContext.Provider>
