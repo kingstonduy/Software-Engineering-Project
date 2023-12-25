@@ -1,81 +1,56 @@
-import cs from './register.module.css';
-import './register.css';
-import { Link, useNavigate } from 'react-router-dom';
-
-import Dog from '../../../assests/loginpage/doglogo.png';
-import DogBackGround from '../../../assests/loginpage/backgroundDog.png';
-import Background from '../../../assests/registerpage/background.png';
-import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import cs from './login.module.css';
+import './login.css';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Background from '../../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
-import { Validator } from '../../Validator/Validator';
-import { checkRegister } from '../../apiClient/UserApi';
+import { Validator } from '../../../Validator/Validator';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../../security/AuthContext';
+
+import { useCookies } from 'react-cookie';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Login() {
+    const navigate = useNavigate();
+
+    const authContext = useAuth();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [fullname, setFullname] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate();
+
     const [errorMessage, setErrorMessage] = useState(false);
+
+    const [cookies, setCookie, removeCookie] = useCookies(['username', 'password']);
+
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    async function register(user) {
-        try {
-            const response = await checkRegister(user);
-            if (response.status == 200) {
-                console.log(response);
-                alert('Register successfully');
-                navigate('/login');
-            }
-        } catch (error) {
-            setErrorMessage(true);
-        }
-    }
-
-    const [checkInput, setCheckInput] = useState('');
     useEffect(() => {
-        Validator(
-            {
-                form: '#form_register',
-                formGroupSelector: '#form-group',
-                errorSelector: '.form-message',
-                rules: [
-                    Validator.isRequired('#username', 'It can not be empty'),
-                    Validator.isRequired('#password', 'It can not be empty'),
-                    Validator.isRequired('#confirmPassword', 'It can not be empty'),
-                    Validator.isRequired('#email', 'It can not be empty'),
-                    Validator.isRequired('#fullname', 'It can not be empty'),
-                    Validator.isRequired('#phoneno', 'It can not be empty'),
+        Validator({
+            form: '#form_login',
+            formGroupSelector: '#form-group',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#username', 'It can not be empty'),
+                Validator.isRequired('#password', 'It can not be empty'),
 
-                    Validator.minLength('#password', 6),
-                    Validator.isConfirmed(
-                        '#confirmPassword',
-                        function () {
-                            return document.querySelector('#form_register #confirmPassword').value;
-                        },
-                        "It's incorrect",
-                    ),
-                    Validator.isEmail('#email', 'It should be in email type'),
-                ],
-                onSubmit: function (data) {
-                    const user = {
-                        userUserName: data.username,
-                        userFullName: data.fullname,
-                        userPassword: data.password,
-                        userEmail: data.email,
-                        userRole: 'user',
-                    };
+                Validator.minLength('#password', 6),
+            ],
+            onSubmit: async function (data) {
+                const user = {
+                    userUserName: data.username,
+                    userPassword: data.password,
+                };
 
-                    register(user);
-                },
+                if (await authContext.login(user)) {
+                    setCookie('username', data.username);
+                    setCookie('password', data.password);
+                    navigate('/Home');
+                } else {
+                    setErrorMessage(true);
+                }
             },
-            setUsername,
-            setPassword,
-        );
+        });
     }, []);
 
     function handleOnchangeUsername(e) {
@@ -87,48 +62,28 @@ export default function Login() {
         e.target.classList.remove('input-error');
     }
 
-    function handleOnchangeConfirmPassword(e) {
-        setConfirmPassword(e.target.value);
-        e.target.classList.remove('input-error');
-    }
-
-    function handleOnchangeFullname(e) {
-        setFullname(e.target.value);
-        e.target.classList.remove('input-error');
-    }
-
-    function handleOnchangeEmail(e) {
-        setEmail(e.target.value);
-        e.target.classList.remove('input-error');
-    }
-
-    function handleOnchangePhoneNumber(e) {
-        setEmail(e.target.value);
-        e.target.classList.remove('input-error');
+    function handleForgotPassword() {
+        alert('Good luck next time !!!');
     }
 
     function handleShowPassword() {
+        // Toggle the state to show or hide the password
         setShowPassword((prevShowPassword) => !prevShowPassword);
-    }
-    
-    function handleShowConfirmPassword() {
-        setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     }
 
     return (
         <div className={cs['wrapper']}>
-            {/* <img className={cs['image-left']} src={Background} alt=""></img> */}
             <div className={cs['big-logo']}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="330" height="369" viewBox="0 0 330 369" fill="none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="317" height="317" viewBox="0 0 317 317" fill="none">
                     <path
                         opacity="0.1"
-                        d="M423.039 189.399C418.805 204.867 410.337 218.274 399.213 227.135C390.33 234.222 380.243 237.929 370.322 237.929C366.586 237.929 362.934 237.413 359.322 236.357C346.206 232.474 335.579 221.692 330.183 206.769C325.243 193.165 324.911 177.16 329.146 161.687C333.421 146.218 341.888 132.812 352.971 123.95C365.176 114.217 379.704 110.853 392.862 114.728C405.98 118.612 416.647 129.393 422.044 144.317C426.941 157.921 427.314 173.926 423.039 189.399ZM145.506 150.301C161.114 150.301 176.016 141.31 186.392 125.623C195.815 111.4 201.004 92.7707 201.004 73.1572C201.004 53.5263 195.815 34.8969 186.392 20.674C176.015 4.99141 161.113 -4 145.506 -4C129.856 -4 114.955 4.99049 104.577 20.674C95.1964 34.8969 90.0075 53.5263 90.0075 73.1572C90.0075 92.7707 95.1964 111.4 104.577 125.623C114.955 141.31 129.857 150.301 145.506 150.301ZM280.495 150.301C296.145 150.301 311.046 141.31 321.424 125.623C330.804 111.4 335.993 92.7707 335.993 73.1572C335.993 53.5263 330.804 34.8969 321.424 20.674C311.046 4.99141 296.144 -4 280.495 -4C264.887 -4 249.985 4.99049 239.608 20.674C230.186 34.8969 224.997 53.5263 224.997 73.1572C224.997 92.7707 230.186 111.4 239.608 125.623C249.985 141.31 264.887 150.301 280.495 150.301ZM96.8562 161.697C92.5812 146.22 84.1134 132.814 73.0295 123.951C60.8259 114.218 46.2978 110.854 33.1387 114.729C19.9806 118.613 9.35363 129.394 3.95708 144.317C-0.941001 157.921 -1.31397 173.927 2.96102 189.4C7.19536 204.868 15.6631 218.274 26.7868 227.136C35.67 234.223 45.7569 237.93 55.6777 237.93C59.372 237.93 63.0663 237.414 66.636 236.358C79.7942 232.474 90.4212 221.693 95.8168 206.77C100.758 193.166 101.091 177.161 96.8562 161.697ZM294.442 199.416C271.694 174.674 242.803 161.057 213 161.057C183.197 161.057 154.264 174.674 131.6 199.416C109.931 223.012 94.8225 255.753 89.0106 291.624C85.3163 314.507 92.0403 336.53 107.524 352.042C123.629 368.184 144.675 373.085 165.264 365.508C180.498 359.881 196.562 357.029 213 357.029C229.438 357.029 245.503 359.881 260.737 365.508C267.088 367.845 273.48 369 279.748 369C293.82 369 307.311 363.21 318.435 352.042C333.96 336.531 340.684 314.507 336.989 291.624C331.178 255.752 316.069 223.011 294.442 199.416Z"
+                        d="M314.039 137.399C309.805 152.867 301.337 166.274 290.213 175.135C281.33 182.222 271.243 185.929 261.322 185.929C257.586 185.929 253.934 185.413 250.322 184.357C237.206 180.474 226.579 169.692 221.183 154.769C216.243 141.165 215.911 125.16 220.146 109.687C224.421 94.2179 232.888 80.8118 243.971 71.9503C256.176 62.2171 270.704 58.8532 283.862 62.7284C296.98 66.6118 307.647 77.393 313.044 92.3165C317.941 105.921 318.314 121.926 314.039 137.399ZM36.5056 98.3007C52.1136 98.3007 67.0156 89.3102 77.3924 73.623C86.8147 59.4001 92.0036 40.7707 92.0036 21.1572C92.0036 1.52631 86.8147 -17.1031 77.3924 -31.326C67.0147 -47.0086 52.1128 -56 36.5056 -56C20.8559 -56 5.95486 -47.0095 -4.42284 -31.326C-13.8036 -17.1031 -18.9925 1.52631 -18.9925 21.1572C-18.9925 40.7707 -13.8036 59.4001 -4.42284 73.623C5.95486 89.3102 20.8568 98.3007 36.5056 98.3007ZM171.495 98.3007C187.145 98.3007 202.046 89.3102 212.424 73.623C221.804 59.4001 226.993 40.7707 226.993 21.1572C226.993 1.52631 221.804 -17.1031 212.424 -31.326C202.046 -47.0086 187.144 -56 171.495 -56C155.887 -56 140.985 -47.0095 130.608 -31.326C121.186 -17.1031 115.997 1.52631 115.997 21.1572C115.997 40.7707 121.186 59.4001 130.608 73.623C140.985 89.3102 155.887 98.3007 171.495 98.3007ZM-12.1438 109.697C-16.4188 94.2198 -24.8866 80.8136 -35.9705 71.9512C-48.1741 62.218 -62.7022 58.8541 -75.8613 62.7293C-89.0194 66.6127 -99.6464 77.3939 -105.043 92.3174C-109.941 105.921 -110.314 121.927 -106.039 137.4C-101.805 152.868 -93.3369 166.274 -82.2132 175.136C-73.33 182.223 -63.2431 185.93 -53.3223 185.93C-49.628 185.93 -45.9337 185.414 -42.364 184.358C-29.2058 180.474 -18.5788 169.693 -13.1832 154.77C-8.24179 141.166 -7.90948 125.161 -12.1438 109.697ZM185.442 147.416C162.694 122.674 133.803 109.057 104 109.057C74.1965 109.057 45.2641 122.674 22.5997 147.416C0.931274 171.012 -14.1775 203.753 -19.9894 239.624C-23.6837 262.507 -16.9597 284.53 -1.47622 300.042C14.6295 316.184 35.6748 321.085 56.264 313.508C71.4983 307.881 87.5624 305.029 104 305.029C120.438 305.029 136.503 307.881 151.737 313.508C158.088 315.845 164.48 317 170.748 317C184.82 317 198.311 311.21 209.435 300.042C224.96 284.531 231.684 262.507 227.989 239.624C222.178 203.752 207.069 171.011 185.442 147.416Z"
                         fill="#FD7E14"
                     />
                 </svg>
             </div>
-            <div className={cs['register-form-container']}>
-                <div className={cs['register-form']}>
+            <div className={cs['login-form-container']}>
+                <form id="form_login" className={cs['login-form']}>
                     <div className={cs['logo']}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 40 35" fill="none">
                             <path
@@ -139,83 +94,42 @@ export default function Login() {
                         <p className={cs['name']}>PetPalz</p>
                     </div>
 
-                    <div className={cs['register']}>
-                        <h4>Sign Up</h4>
-                        <p>Create your Hope UI account</p>
+                    <div className={cs['sign-in']}>
+                        <h4>Sign In</h4>
+                        <p>Sign in to stay connected</p>
                     </div>
-                    <form id="form_register" className={cs['register-frame']}>
+                    {errorMessage && (
+                        <span
+                            style={{
+                                color: 'red',
+                                margin: '15px',
+                                alignSelf: 'center',
+                            }}
+                            className="form-message"
+                        >
+                            Your Username or Password is incorrect!
+                        </span>
+                    )}
+                    {console.log(errorMessage)}
+                    <div id="form_login" className={cs['sign-in-frame']}>
                         <div id="form-group">
-                            <p className={cs['register-info']}>Full name</p>
-                            <div className={cs['register-info-container']}>
+                            <p className={cs['email']}>Username</p>
+                            <div className={cs['email-container']}>
                                 <input
                                     type="text"
-                                    className="form-control"
-                                    id="fullname"
-                                    placeholder="Enter your full name"
-                                    value={fullname}
-                                    name="fullname"
-                                    onChange={handleOnchangeFullname}
-                                />
-                            </div>
-                            <span className="form-message"></span>
-                        </div>
-                        <div id="form-group">
-                            <p className={cs['register-info']}>User name</p>
-                            <div className={cs['register-info-container']}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="username"
-                                    placeholder="Enter your user name"
+                                    className="form-control" //{cs['email-input']}
+                                    value={username}
+                                    placeholder="Enter your username"
                                     name="username"
+                                    id="username"
                                     onChange={handleOnchangeUsername}
                                 />
                             </div>
                             <span className="form-message"></span>
-                            {errorMessage && (
-                                <span
-                                    style={{
-                                        color: 'red',
-                                        'margin-top': '15px',
-                                        alignSelf: 'center',
-                                    }}
-                                    className="form-message"
-                                >
-                                    Your username has already used!
-                                </span>
-                            )}
                         </div>
                         <div id="form-group">
-                            <p className={cs['register-info']}>Email</p>
-                            <div className={cs['register-info-container']}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="email"
-                                    placeholder="Enter your email address"
-                                    name="email"
-                                    onChange={handleOnchangeEmail}
-                                />
-                            </div>
-                            <span className="form-message"></span>
-                        </div>
-                        <div id="form-group">
-                            <p className={cs['register-info']}>Phone No.</p>
-                            <div className={cs['register-info-container']}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="phoneno"
-                                    placeholder="Enter your phone number"
-                                    name="phoneno"
-                                    onChange={handleOnchangePhoneNumber}
-                                />
-                            </div>
-                            <span className="form-message"></span>
-                        </div>
-                        <div id="form-group">
-                            <p className={cs['register-info']}>Password</p>
-                            <div className={cs['register-info-container']}>
+                            <p className={cs['password']}>Password</p>
+                            <div className={cs['password-container']}>
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     className="form-control" //{cs['password-input']}
@@ -225,38 +139,31 @@ export default function Login() {
                                     id="password"
                                     onChange={handleOnchangePassword}
                                 />
-                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} className={cs['show-icon']}/>
-                            </div>
-                            <span className="form-message"></span>
-                        </div>
-                        <div id="form-group" >
-                            <p className={cs['register-info']}>Confirm password</p>
-                            <div className={cs['register-info-container']}>
-                                <input
-                                    type={showConfirmPassword ? 'text' : 'password'}
-                                    className="form-control"
-                                    value={confirmPassword}
-                                    placeholder="Confirm your password"
-                                    name="confirmPassword"
-                                    id="confirmPassword"
-                                    onChange={handleOnchangeConfirmPassword}
+                                <FontAwesomeIcon
+                                    icon={showPassword ? faEyeSlash : faEye}
+                                    onClick={handleShowPassword}
+                                    className={cs['show-icon']}
                                 />
-                                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} onClick={handleShowConfirmPassword} className={cs['show-icon']}/>
                             </div>
                             <span className="form-message"></span>
                         </div>
-                        <div className={cs['agreement']}>
-                            <input type="checkbox" />
-                            <p className={cs['question']}>I agree with the terms of use</p>
+                        <div className={cs['remember-forgot']}>
+                            <div className={cs['remember-container']}>
+                                <input type="checkbox" />
+                                <p className={cs['question']}>Remember me ?</p>
+                            </div>
+                            <p className={cs['forgot']} onClick={handleForgotPassword}>
+                                Forgot Password
+                            </p>
                         </div>
                         <div id="form-group">
                             <button type="submit" className="btn_form">
-                                Sign up
+                                Sign in
                             </button>
                         </div>
-                    </form>
+                    </div>
                     <div className={cs['other-account-container']}>
-                        <p>or sign up with other accounts?</p>
+                        <p>or sign in with other accounts?</p>
                         <div className={cs['other-account']}>
                             <div className={cs['google']}>
                                 <svg
@@ -395,16 +302,16 @@ export default function Login() {
                                 </svg>
                             </div>
                         </div>
-                        <div className={cs['already-have-account']}>
-                            <p>Already have an account ? </p>
-                            <Link to="/Login" className={cs['to-sign-in-page']}>
-                                Sign in
+                        <div className={cs['do-not-have-account']}>
+                            <p>Don’t have an account?</p>
+                            <Link to="/Register" className={cs['to-sign-up-page']}>
+                                Sign up
                             </Link>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
+            {/* <img src={Background} alt="" className={cs['bg-img']}></img> */}
         </div>
     );
 }
-

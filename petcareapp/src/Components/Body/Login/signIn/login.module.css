@@ -1,26 +1,20 @@
 .big-logo {
     position: absolute;
-    right: 0;
-    z-index: 0;
 }
 .wrapper {
     display: flex;
     justify-content: space-between;
+    height: 100% !important;
 }
-.bg-img {
-    overflow: hidden;
-}
-.register-form-container {
+.login-form-container {
     width: 100%;
     height: 100%;
+    margin-top: 30px;
     display: flex;
-    margin-top: 25px;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
-    z-index: 100;
 }
-.register-form {
+.login-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,13 +31,13 @@
     color: #4b5175;
 }
 .wrapper img {
-    width: 45%;
+    width: 50%;
 }
 
-.register {
+.sign-in {
     margin-top: 20px;
 }
-.register h4 {
+.sign-in h4 {
     color: #000;
     font-family: Inter;
     font-size: 33px;
@@ -51,30 +45,54 @@
     line-height: 130%;
     text-align: center;
 }
-.register p {
+.sign-in p {
     color: #8a92a6;
     font-family: Inter;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 175%;
     text-align: center;
     margin: 16px 0 25px 0;
 }
-.register-frame {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 15px 30px;
+.sign-in-frame {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 150%;
 }
-.register-info-container {
+.show-icon {
+    width: 22px;
+    padding: 2px;
+}
+.email-container {
+}
+.email,
+.password {
+    color: #8a92a6;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    line-height: 30px;
+}
+.email-input,
+.password-input {
+    display: flex;
+    width: 436px;
+    height: 44px;
+    font-size: 16px;
+    align-items: center;
+    gap: 227px;
+    background-color: #fff;
+}
+
+.email-container, .password-container {
     display: flex;
     align-items: center;
-    padding: 2px 10px;
+    padding: 4px 16px;
     gap: 10px;
     border-radius: 4px;
     border: 1px solid #fd7e14;
-    background-color: #fff;
 }
 
 .show-icon {
@@ -86,52 +104,39 @@
     cursor: pointer;
 }
 
-.register-info {
-    color: #8a92a6;
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 175%;
-    margin-bottom: 4px;
-}
-.register-info-input {
+.remember-forgot {
     display: flex;
-    width: 300px;
-    height: 40px;
-    padding: 8px 16px;
-    font-size: 16px;
+    justify-content: space-between;
     align-items: center;
-    gap: 227px;
-    border-radius: 4px;
-    border: 1px solid #fd7e14;
-    background-color: #fff;
-}
-.password-container {
-}
-
-.agreement {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 24px;
-}
-.agreement input:hover {
-    cursor: pointer;
 }
 .remember-container {
     display: flex;
     align-items: center;
+    gap: 5px;
+}
+.remember-container input {
+    cursor: pointer;
 }
 .question {
     color: #8a92a6;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
-    line-height: 175%;
+}
+.forgot {
+    color: #fd7e14;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
 }
 
-.sign-in-button {
+.forgot:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* .sign-in-button {
     width: 40%;
     margin-top: 24px;
     display: flex;
@@ -153,20 +158,19 @@
 .sign-in-button:hover {
     opacity: 0.7;
     cursor: pointer;
-}
+} */
 
 .other-account-container {
-    margin-top: 16px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 .other-account-container > p {
     color: #232d42;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
-    line-height: 175%;
     text-align: center;
 }
 .other-account {
@@ -179,30 +183,33 @@
     cursor: pointer;
     opacity: 0.7;
 }
-.already-have-account {
+.do-not-have-account {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-.already-have-account p:first-child,
-.already-have-account p:last-child {
+.do-not-have-account p:first-child,
+.do-not-have-account p:last-child {
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
-    line-height: 175%;
 }
 
-.already-have-account p {
+.do-not-have-account p {
     color: #232d42;
 }
-.to-sign-in-page {
+.to-sign-up-page {
     color: #fd7e14;
     cursor: pointer;
     text-decoration: none;
 }
 
-.to-sign-in-page:hover {
+.to-sign-up-page:hover {
     text-decoration: underline;
     background-color: transparent;
+}
+
+.bg-img {
+    overflow: hidden;
 }
