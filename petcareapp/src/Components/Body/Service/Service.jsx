@@ -3,6 +3,12 @@ import cs from './service.module.css';
 import { Link } from 'react-router-dom';
 import DogCat from '../../../assests/servicepage/DogCat.png';
 import PetHealthcare from '../../../assests/servicepage/PetHealthcare.jpg';
+import Grooming from '../../../assests/servicepage/Grooming.png';
+import Training from '../../../assests/servicepage/Training.png';
+import Cleaning from '../../../assests/servicepage/Cleaning.png';
+import Healthcare from '../../../assests/servicepage/Healthcare.png';
+import Adoption from '../../../assests/servicepage/Adoption.png';
+import Advice from '../../../assests/servicepage/Advice.png';
 import OurService from '../../../assests/servicepage/OurService.png';
 import BookingForm from '../../HiddenWrapContainer/BookingForm';
 import { useEffect, useState } from 'react';
@@ -43,42 +49,42 @@ export default function Service() {
             name: 'Pet Grooming',
             newPrice: 10,
             oldPrice: 14,
-            image: PetHealthcare,
+            image: Grooming,
         },
         {
             id: 2,
             name: 'Pet Training',
             newPrice: 20,
             oldPrice: 25,
-            image: PetHealthcare,
+            image: Training,
         },
         {
             id: 3,
             name: 'Pet Healthcare',
             newPrice: 30,
             oldPrice: 32,
-            image: PetHealthcare,
+            image: Healthcare,
         },
         {
             id: 4,
             name: 'Pet Clean Up',
             newPrice: 15,
             oldPrice: 18,
-            image: PetHealthcare,
+            image: Cleaning,
         },
         {
             id: 5,
             name: 'Pet Adoption',
             newPrice: 20,
             oldPrice: 22,
-            image: PetHealthcare,
+            image: Adoption,
         },
         {
             id: 6,
             name: 'Veterinary Care',
             newPrice: 30,
             oldPrice: 33,
-            image: PetHealthcare,
+            image: Advice,
         },
     ];
 
@@ -98,12 +104,14 @@ export default function Service() {
             <div className={cs['service-list']}>
                 {Services.map((service) => (
                     <div className={cs['service']} key={service.id}>
+                        <div className={cs['img-container']}>
+                            <img src={service.image} alt="" />
+                        </div>
                         <h4>{service.name}</h4>
                         <div className={cs['price']}>
                             <p>${service.newPrice}</p>
                             <p>${service.oldPrice}</p>
                         </div>
-                        <img src={PetHealthcare} alt=""></img>
                     </div>
                 ))}
             </div>
