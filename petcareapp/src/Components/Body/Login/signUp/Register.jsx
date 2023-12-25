@@ -2,41 +2,99 @@ import cs from './register.module.css';
 import './register.css';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Dog from '../../../assests/loginpage/doglogo.png';
-import DogBackGround from '../../../assests/loginpage/backgroundDog.png';
-import Background from '../../../assests/registerpage/background.png';
+import Dog from '../../../../assests/loginpage/doglogo.png';
+import DogBackGround from '../../../../assests/loginpage/backgroundDog.png';
+import Background from '../../../../assests/registerpage/background.png';
 import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { Validator } from '../../Validator/Validator';
-import { checkRegister } from '../../apiClient/UserApi';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Validator } from '../../../Validator/Validator';
+import { checkRegister, verifyOTP, resendOTP } from '../../../apiClient/UserApi';
+import { Box, Modal, TextField, Typography, Button } from '@mui/material';
+// import { Modal, Button, Input, Form } from 'antd';
+import { useAuth } from '../../../security/AuthContext';
+import { useCookies } from 'react-cookie';
 
-export default function Login() {
+export default function Register() {
+    const [userData, setUserData] = useState({
+        userUserName: '',
+        userFullName: '',
+        userPassword: '',
+        userEmail: '',
+        userRole: 'user',
+    });
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [fullname, setFullname] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [OTP, setOtp] = useState('');
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const authContext = useAuth();
+    const { setCookie } = useCookies(['username', 'password']);
 
     async function register(user) {
         try {
-            const response = await checkRegister(user);
-            if (response.status == 200) {
-                console.log(response);
+            await checkRegister(user);
+        } catch (error) {
+            setErrorMessage(true);
+        }
+    }
+
+    async function checkOTP(value) {
+        const userDataTemp = {
+            userUserName: userData.userUserName,
+            otp: value,
+        };
+        // console.log(userDataTemp);
+        try {
+            const checking = await verifyOTP(userDataTemp);
+            if (checking.status == 200) {
                 alert('Register successfully');
-                navigate('/login');
+                // console.log(userData);
+                // const user = {
+                //     userUserName: userData.userUserName,
+                //     userPassword: userData.userPassword,
+                // };
+                // await authContext.login(user);
+                // setCookie('username', userData.userUserName);
+                // setCookie('password', userData.userPassword);
+                // navigate('/Home');
+                navigate('/Login');
             }
         } catch (error) {
             setErrorMessage(true);
         }
     }
 
-    const [checkInput, setCheckInput] = useState('');
+    async function resendOtp(data) {
+        console.log(data);
+        try {
+            await resendOTP(data);
+        } catch (error) {
+            setErrorMessage(true);
+        }
+    }
+
+    // Modal
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleOpenModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+
+    const handleInputOtpChange = (event) => {
+        setOtp(event.target.value);
+    };
+
     useEffect(() => {
         Validator(
             {
@@ -62,6 +120,8 @@ export default function Login() {
                     Validator.isEmail('#email', 'It should be in email type'),
                 ],
                 onSubmit: function (data) {
+                    // register(data);
+
                     const user = {
                         userUserName: data.username,
                         userFullName: data.fullname,
@@ -70,6 +130,7 @@ export default function Login() {
                         userRole: 'user',
                     };
 
+                    setUserData(user);
                     register(user);
                 },
             },
@@ -110,14 +171,14 @@ export default function Login() {
     function handleShowPassword() {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }
-    
+
     function handleShowConfirmPassword() {
         setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     }
 
     return (
         <div className={cs['wrapper']}>
-            <img className={cs['image-left']} src={Background} alt=""></img>
+            {/* <img className={cs['bg-img']} src={Background} alt=""></img> */}
             <div className={cs['big-logo']}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="330" height="369" viewBox="0 0 330 369" fill="none">
                     <path
@@ -225,11 +286,15 @@ export default function Login() {
                                     id="password"
                                     onChange={handleOnchangePassword}
                                 />
-                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} className={cs['show-icon']}/>
+                                <FontAwesomeIcon
+                                    icon={showPassword ? faEyeSlash : faEye}
+                                    onClick={handleShowPassword}
+                                    className={cs['show-icon']}
+                                />
                             </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" >
+                        <div id="form-group">
                             <p className={cs['register-info']}>Confirm password</p>
                             <div className={cs['register-info-container']}>
                                 <input
@@ -241,7 +306,11 @@ export default function Login() {
                                     id="confirmPassword"
                                     onChange={handleOnchangeConfirmPassword}
                                 />
-                                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} onClick={handleShowConfirmPassword} className={cs['show-icon']}/>
+                                <FontAwesomeIcon
+                                    icon={showConfirmPassword ? faEyeSlash : faEye}
+                                    onClick={handleShowConfirmPassword}
+                                    className={cs['show-icon']}
+                                />
                             </div>
                             <span className="form-message"></span>
                         </div>
@@ -249,11 +318,77 @@ export default function Login() {
                             <input type="checkbox" />
                             <p className={cs['question']}>I agree with the terms of use</p>
                         </div>
+
                         <div id="form-group">
-                            <button type="submit" className="btn_form">
+                            {/* <button className="btn_form" onClick={handleOpenModal}>
+                                Sign up
+                            </button> */}
+                            <button type="submit" className="btn_form" onClick={handleOpenModal}>
                                 Sign up
                             </button>
                         </div>
+
+                        <Modal open={modalOpen} onClose={handleCloseModal}>
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: 500,
+                                    height: 550,
+                                    bgcolor: 'background.paper',
+                                    boxShadow: 10,
+                                    borderRadius: 2,
+                                    p: 2,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+                                }}
+                                container
+                                component="form"
+                            >
+                                <Typography
+                                    variant="h3"
+                                    fontWeight={600}
+                                    color="#4B5175"
+                                    alignItems="center"
+                                    marginBottom={7}
+                                >
+                                    OTP confirmation
+                                </Typography>
+
+                                <TextField
+                                    required
+                                    variant="outlined"
+                                    type="password"
+                                    value={OTP}
+                                    label="Enter OTP"
+                                    sx={{
+                                        width: '80%',
+                                        fontSize: '30px',
+                                        '&.MuiOutlinedInput-notchedOutline': { fontSize: '30px' },
+                                    }}
+                                    onChange={handleInputOtpChange}
+                                />
+
+                                <Button
+                                    size="large"
+                                    variant="contained"
+                                    sx={{ width: '60%', marginTop: '20px', color: '#ffffff', fontSize: '16px' }}
+                                    onClick={() => checkOTP(OTP)}
+                                >
+                                    Submit
+                                </Button>
+                                <Button
+                                    onClick={() => resendOtp(userData)}
+                                    sx={{ marginTop: '10px', fontSize: '14px' }}
+                                >
+                                    Resend OTP
+                                </Button>
+                            </Box>
+                        </Modal>
                     </form>
                     <div className={cs['other-account-container']}>
                         <p>or sign up with other accounts?</p>
@@ -407,4 +542,3 @@ export default function Login() {
         </div>
     );
 }
-

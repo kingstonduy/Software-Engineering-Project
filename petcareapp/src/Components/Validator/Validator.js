@@ -87,6 +87,7 @@ export function Validator(options,setUsername,setPassword) {
 							default:
 								values[input.name] = input.value;
 						}
+						
 						return values;
 					}, {});
 
