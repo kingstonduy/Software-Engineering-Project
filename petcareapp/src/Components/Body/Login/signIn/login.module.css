@@ -163,7 +163,7 @@
     margin-top: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 5px;
 }
 .other-account-container > p {
     color: #232d42;
