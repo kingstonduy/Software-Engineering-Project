@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import PetHuman from '../../../../src/assests/homepage/pethuman.png';
 import FeatureProducts from '../../../../src/assests/homepage/featureproducts.png';
 import Product from '../../../../src/assests/homepage/product.png';
+import Catfood from '../../../../src/assests/homepage/catfood.png';
+import Pettoys from '../../../../src/assests/homepage/pettoys.png';
+import Dogfood from '../../../../src/assests/homepage/dogfood.png';
 import Benefits from '../../../../src/assests/homepage/benefits.png';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -273,9 +276,9 @@ export default function Home() {
             <div className={cs['products-container']}>
                 <div className={cs['product-card']}>
                     <div className={cs['product-img']}>
-                        <img src={Product} alt=""></img>
+                        <img src={Catfood} alt=""></img>
                     </div>
-                    <p className={cs['product-name']}>Food Dog Bag</p>
+                    <p className={cs['product-name']}>Food Cat Bag</p>
                     <div className={cs['product-price']}>
                         <p className={cs['price-after']}>$554.00</p>
                         <p className={cs['price-before']}>$786.85</p>
@@ -312,12 +315,12 @@ export default function Home() {
 
                 <div className={cs['product-card-center']}>
                     <div className={cs['product-img']}>
-                        <img src={Product} alt=""></img>
+                        <img src={Pettoys} alt=""></img>
                     </div>
-                    <p className={cs['product-name']}>Food Dog Bag</p>
+                    <p className={cs['product-name']}>Pet Toys</p>
                     <div className={cs['product-price']}>
-                        <p className={cs['price-after']}>$554.00</p>
-                        <p className={cs['price-before']}>$786.85</p>
+                        <p className={cs['price-after']}>$867.00</p>
+                        <p className={cs['price-before']}>$1073.44</p>
                     </div>
                     {/* <div className={cs['rating']}>
                         <div className={cs['stars']}>
@@ -351,12 +354,12 @@ export default function Home() {
 
                 <div className={cs['product-card']}>
                     <div className={cs['product-img']}>
-                        <img src={Product} alt=""></img>
+                        <img src={Dogfood} alt=""></img>
                     </div>
                     <p className={cs['product-name']}>Food Dog Bag</p>
                     <div className={cs['product-price']}>
-                        <p className={cs['price-after']}>$554.00</p>
-                        <p className={cs['price-before']}>$786.85</p>
+                        <p className={cs['price-after']}>$399.00</p>
+                        <p className={cs['price-before']}>$852.68</p>
                     </div>
                     {/* <div className={cs['rating']}>
                         <div className={cs['stars']}>
