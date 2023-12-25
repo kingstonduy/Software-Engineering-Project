@@ -8,7 +8,6 @@ import Background from '../../../../assests/registerpage/background.png';
 import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { checkRegister } from '../../apiClient/UserApi';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Validator } from '../../../Validator/Validator';
 import { checkRegister, verifyOTP, resendOTP } from '../../../apiClient/UserApi';

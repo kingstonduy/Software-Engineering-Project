@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Background from '../../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
-import { Validator } from '../../Validator/Validator';
+import { Validator } from '../../../Validator/Validator';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../../security/AuthContext';
 
@@ -139,7 +139,11 @@ export default function Login() {
                                     id="password"
                                     onChange={handleOnchangePassword}
                                 />
-                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} className={cs['show-icon']}/>
+                                <FontAwesomeIcon
+                                    icon={showPassword ? faEyeSlash : faEye}
+                                    onClick={handleShowPassword}
+                                    className={cs['show-icon']}
+                                />
                             </div>
                             <span className="form-message"></span>
                         </div>
@@ -308,7 +312,6 @@ export default function Login() {
                 </form>
             </div>
             <img src={Background} alt=""></img>
-           
         </div>
     );
 }

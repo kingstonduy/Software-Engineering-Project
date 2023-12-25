@@ -8,4 +8,4 @@ export const getProductDetail = (id) => apiClient.get(`/product/${id}`)
 
 export const getProductByConstraint = (Constraint) => apiClient.get(`/products/constraints/${Constraint}`)
 
-export const getProductByInStock = (constraint) => apiClient.get('/products/inStock')
+export const getProductByInStock = () => apiClient.get('/products/inStock')

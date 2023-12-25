@@ -9,32 +9,35 @@ export const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
 
-export default function AuthProvider({children}){
+export default function AuthProvider({ children }) {
 
-    
+
     const [isAuthenticated, setAuthenticated] = useState(false)
-    const [username,setUsername] = useState('')
+    const [username, setUsername] = useState('')
 
 
-    async function login(user){
-            try{
-                console.log(user)
-                // console.log(checkLogin(user))
-                const response = await checkLogin(user)
-                // console.log(response)
-                if(response.status == 200){
-                    setAuthenticated(true)
-                    setUsername(user.userUserName)
-                    return true;
-                }
+    async function login(user) {
+        try {
+            console.log(user)
+            // console.log(checkLogin(user))
+            const response = await checkLogin(user)
+            // console.log(response)
+            if (response.status == 200) {
+                setAuthenticated(true)
+                setUsername(user.userUserName)
+                const token = response.data.token
+                console.log(token)
+                localStorage.setItem('token', token)
+                return true;
             }
-            catch(error){
-                console.log(error)
-                return false;
-            }
+        }
+        catch (error) {
+            console.log(error)
+            return false;
+        }
     }
 
-    function logout(){
+    function logout() {
         setAuthenticated(false)
         setUsername(null)
     }
@@ -42,8 +45,8 @@ export default function AuthProvider({children}){
 
 
 
-    return(
-        <AuthContext.Provider value={{isAuthenticated, setAuthenticated, login, logout,username}}>
+    return (
+        <AuthContext.Provider value={{ isAuthenticated, setAuthenticated, login, logout, username }}>
             {children}
         </AuthContext.Provider>
     )
