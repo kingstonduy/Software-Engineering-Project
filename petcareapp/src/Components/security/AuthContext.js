@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
                 setAuthenticated(true)
                 setUsername(user.userUserName)
                 const token = response.data.token
-                console.log(token)
+                // console.log(token)
                 localStorage.setItem('token', token)
                 return true;
             }

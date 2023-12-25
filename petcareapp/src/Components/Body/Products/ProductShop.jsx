@@ -4,7 +4,6 @@ import PetShopProduct from '../../../assests/productpage/petshopproduct.png';
 import { Switch } from 'antd';
 import { Link, useParams } from 'react-router-dom';
 import Product from './Product';
-import { checkLogin, getUsers } from '../../apiClient/UserApi';
 import { Box, Pagination } from '@mui/material';
 import { useAuth } from '../../security/AuthContext';
 import { getProductByConstraint, getProductByInStock, getProducts } from '../../apiClient/ProductApi';
@@ -21,6 +20,7 @@ export default function ProductShop() {
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(18);
     const productPage = Math.ceil(products.length / productsPerPage);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         window.scrollTo({
@@ -37,11 +37,15 @@ export default function ProductShop() {
     }, [type]);
 
     async function retrieveProducts() {
-        await getProductByConstraint(type)
+        await getProductByConstraint(token, type)
             .then((response) => successfully(response))
             .catch((error) => console.log(error));
 
-        console.log('test')
+        // await getProductByConstraint(type)
+        //     .then((response) => successfully(response))
+        //     .catch((error) => console.log(error));
+
+        // console.log(localStorage.getItem('token'));
     }
 
     function successfully(response) {
@@ -49,12 +53,10 @@ export default function ProductShop() {
     }
 
     function handleChangeSelect(e) {
-
         navigate(`/Products/${e.target.value}`);
     }
 
     function handleSort(e) {
-        console.log(e.target.value);
         if (e.target.value == 'ascending') {
             const newProducts = products.sort((a, b) => a.productPrice - b.productPrice);
 
@@ -78,7 +80,7 @@ export default function ProductShop() {
             }
         } else {
             try {
-                const response = await getProducts();
+                const response = await getProducts(token);
                 if (response.status == 200) {
                     setProducts(response.data);
                 }
@@ -91,7 +93,6 @@ export default function ProductShop() {
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-  
 
     const handleChangePage = (event, value) => {
         window.scrollTo({
@@ -146,7 +147,7 @@ export default function ProductShop() {
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
-                        marginTop:'70px',
+                        marginTop: '70px',
                     }}
                 >
                     <Pagination
