@@ -1,15 +1,8 @@
-import { apiClient } from "./Axios";
+import { apiClient , apiClientWithToken } from "./Axios";
 
 const token = localStorage.getItem("token");
 
 
-export const getCommentByProductId = (id) => apiClient.get(`/comments/product/${id}`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const postComment = (comment) => apiClient.post(`/comment/user/product`, comment, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
+export const getCommentByProductId = (id) => apiClientWithToken.get(`/comments/product/${id}`)
+
+export const postComment = (comment) => apiClientWithToken.post(`/comment/user/product`, comment)

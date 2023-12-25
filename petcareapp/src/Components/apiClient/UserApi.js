@@ -1,6 +1,6 @@
 
 
-import { apiClient } from "./Axios"
+import { apiClient , apiClientWithToken } from "./Axios"
 
 const token = localStorage.getItem("token");
 
@@ -12,33 +12,14 @@ export const verifyOTP = (OTP) => apiClient.post('/verify', OTP)
 export const resendOTP = (user) => apiClient.post('/resendOtp', user)
 
 
-export const getUsers = () => apiClient.get('/jpa/users', {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const getUserByUsername = (username) => apiClient.get(`/users/${username}`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const getOrderedProduct = (username) => apiClient.get(`/users/${username}/orederedProducts`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const getUserInformation = (username) => apiClient.get(`/users/${username}`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const getUserChangeInformation = (username) => apiClient.get(`/user/userChangeInformation/${username}`, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
-export const changeUserInformation = (user) => apiClient.put('/user/userChangeInformation/update', user, {
-    headers: {
-        'Authorization': `Bearer ${token}`
-    }
-})
+export const getUsers = () => apiClientWithToken.get('/jpa/users')
+
+export const getUserByUsername = (username) => apiClientWithToken.get(`/users/${username}`)
+
+export const getOrderedProduct = (username) => apiClientWithToken.get(`/users/${username}/orederedProducts`)
+
+export const getUserInformation = (username) => apiClientWithToken.get(`/users/${username}`)
+
+export const getUserChangeInformation = (username) => apiClientWithToken.get(`/user/userChangeInformation/${username}`)
+
+export const changeUserInformation = (user) => apiClientWithToken.put('/user/userChangeInformation/update')
