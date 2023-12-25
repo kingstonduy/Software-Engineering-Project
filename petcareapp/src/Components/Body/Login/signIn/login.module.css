@@ -4,9 +4,12 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
+    height: 100% !important;
 }
 .login-form-container {
     width: 100%;
+    height: 100%;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,6 +93,7 @@
 }
 
 .show-icon {
+    width: 22px;
     padding: 2px;
 }
 .show-icon:hover {
@@ -159,7 +163,7 @@
     margin-top: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 5px;
 }
 .other-account-container > p {
     color: #232d42;
@@ -205,4 +209,8 @@
 .to-sign-up-page:hover {
     text-decoration: underline;
     background-color: transparent;
+}
+
+.bg-img {
+    overflow: hidden;
 }

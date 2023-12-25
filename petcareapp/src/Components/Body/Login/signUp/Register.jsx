@@ -178,7 +178,7 @@ export default function Register() {
 
     return (
         <div className={cs['wrapper']}>
-            <img className={cs['image-left']} src={Background} alt=""></img>
+            {/* <img className={cs['bg-img']} src={Background} alt=""></img> */}
             <div className={cs['big-logo']}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="330" height="369" viewBox="0 0 330 369" fill="none">
                     <path

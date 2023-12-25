@@ -311,7 +311,7 @@ export default function Login() {
                     </div>
                 </form>
             </div>
-            <img src={Background} alt=""></img>
+            {/* <img src={Background} alt="" className={cs['bg-img']}></img> */}
         </div>
     );
 }
