@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
 import { checkRegister } from '../../apiClient/UserApi';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-export default function Register() {
+export default function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -19,6 +20,8 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     async function register(user) {
         try {
@@ -56,8 +59,7 @@ export default function Register() {
                         },
                         "It's incorrect",
                     ),
-                    Validator.isEmail('#email', 'Invalid email'),
-                    Validator.isPhoneNumber('#phoneno', 'Invalid phone number'),
+                    Validator.isEmail('#email', 'It should be in email type'),
                 ],
                 onSubmit: function (data) {
                     const user = {
@@ -105,9 +107,17 @@ export default function Register() {
         e.target.classList.remove('input-error');
     }
 
+    function handleShowPassword() {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    }
+    
+    function handleShowConfirmPassword() {
+        setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+    }
+
     return (
         <div className={cs['wrapper']}>
-            <img className={cs['image-left']} src={Background} alt=""></img>
+            {/* <img className={cs['image-left']} src={Background} alt=""></img> */}
             <div className={cs['big-logo']}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="330" height="369" viewBox="0 0 330 369" fill="none">
                     <path
@@ -134,29 +144,33 @@ export default function Register() {
                         <p>Create your Hope UI account</p>
                     </div>
                     <form id="form_register" className={cs['register-frame']}>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group">
                             <p className={cs['register-info']}>Full name</p>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="fullname"
-                                placeholder="Enter your full name"
-                                // value={fullname}
-                                name="fullname"
-                                onChange={handleOnchangeFullname}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="fullname"
+                                    placeholder="Enter your full name"
+                                    value={fullname}
+                                    name="fullname"
+                                    onChange={handleOnchangeFullname}
+                                />
+                            </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group">
                             <p className={cs['register-info']}>User name</p>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="username"
-                                placeholder="Enter your user name"
-                                name="username"
-                                onChange={handleOnchangeUsername}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="username"
+                                    placeholder="Enter your user name"
+                                    name="username"
+                                    onChange={handleOnchangeUsername}
+                                />
+                            </div>
                             <span className="form-message"></span>
                             {errorMessage && (
                                 <span
@@ -171,52 +185,64 @@ export default function Register() {
                                 </span>
                             )}
                         </div>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group">
                             <p className={cs['register-info']}>Email</p>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="email"
-                                placeholder="Enter your email address"
-                                name="email"
-                                onChange={handleOnchangeEmail}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="email"
+                                    placeholder="Enter your email address"
+                                    name="email"
+                                    onChange={handleOnchangeEmail}
+                                />
+                            </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group">
                             <p className={cs['register-info']}>Phone No.</p>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="phoneno"
-                                placeholder="Enter your phone number"
-                                name="phoneno"
-                                onChange={handleOnchangePhoneNumber}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="phoneno"
+                                    placeholder="Enter your phone number"
+                                    name="phoneno"
+                                    onChange={handleOnchangePhoneNumber}
+                                />
+                            </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group">
                             <p className={cs['register-info']}>Password</p>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="password"
-                                placeholder="Enter your password"
-                                name="password"
-                                onChange={handleOnchangePassword}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    className="form-control" //{cs['password-input']}
+                                    value={password}
+                                    placeholder="Enter your password"
+                                    name="password"
+                                    id="password"
+                                    onChange={handleOnchangePassword}
+                                />
+                                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} onClick={handleShowPassword} className={cs['show-icon']}/>
+                            </div>
                             <span className="form-message"></span>
                         </div>
-                        <div id="form-group" className={cs['register-info-container']}>
+                        <div id="form-group" >
                             <p className={cs['register-info']}>Confirm password</p>
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="confirmPassword"
-                                placeholder="Confirm your password"
-                                name="confirmPassword"
-                                onChange={handleOnchangeConfirmPassword}
-                            />
+                            <div className={cs['register-info-container']}>
+                                <input
+                                    type={showConfirmPassword ? 'text' : 'password'}
+                                    className="form-control"
+                                    value={confirmPassword}
+                                    placeholder="Confirm your password"
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    onChange={handleOnchangeConfirmPassword}
+                                />
+                                <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} onClick={handleShowConfirmPassword} className={cs['show-icon']}/>
+                            </div>
                             <span className="form-message"></span>
                         </div>
                         <div className={cs['agreement']}>
@@ -381,3 +407,4 @@ export default function Register() {
         </div>
     );
 }
+
