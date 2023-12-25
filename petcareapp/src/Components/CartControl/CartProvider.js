@@ -89,6 +89,8 @@ export default function CartProvider({children}){
             username: AuthContext.username
         }
         try{
+            const token = localStorage.getItem("token");
+            console.log(token)
             const  response =  await addProductOnCart(addToCartRequest)
             alert('add to cart success')
             setIsCartOpen(false)
