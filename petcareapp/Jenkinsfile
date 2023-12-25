@@ -33,26 +33,26 @@ pipeline {
                     dir("petcareapp"){
                         script {
                             sh "pwd"
-                            // docker.withRegistry('',DOCKER_PASS) {
-                            //     docker_image = docker.build "${IMAGE_NAME}"
-                            // }
+                            docker.withRegistry('',DOCKER_PASS) {
+                                docker_image = docker.build "${IMAGE_NAME}"
+                            }
 
-                            // docker.withRegistry('',DOCKER_PASS) {
-                            //     docker_image.push("${IMAGE_TAG}")
-                            // }
+                            docker.withRegistry('',DOCKER_PASS) {
+                                docker_image.push("${IMAGE_TAG}")
+                            }
                         }
                     }
                 }
 
         }
 
-        // stage ('Cleanup Artifacts') {
-        //     steps {
-        //         script {
-        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-        //         }
-        //     }
-        // }
+        stage ('Cleanup Artifacts') {
+            steps {
+                script {
+                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+                }
+            }
+        }
         // stage("Trigger CD Pipeline") {
         //     steps {
         //         script {
