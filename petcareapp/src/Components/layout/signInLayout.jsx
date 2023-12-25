@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from '../Body/Login/Login';
+import Login from '../Body/Login/signIn/Login';
 
 export const SignInLayout = () => {
     return (

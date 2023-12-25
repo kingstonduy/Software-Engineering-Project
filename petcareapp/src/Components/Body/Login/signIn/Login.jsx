@@ -1,12 +1,12 @@
 import cs from './login.module.css';
-import '../Login/login.css';
+import './login.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Background from '../../../assests/loginpage/background.png';
+import Background from '../../../../assests/loginpage/background.png';
 import { useEffect, useState } from 'react';
 import { Validator } from '../../Validator/Validator';
-import { useAuth } from '../../security/AuthContext';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../../security/AuthContext';
 
 import { useCookies } from 'react-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -308,6 +308,7 @@ export default function Login() {
                 </form>
             </div>
             <img src={Background} alt=""></img>
+           
         </div>
     );
 }
