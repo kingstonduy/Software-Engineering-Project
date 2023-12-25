@@ -174,7 +174,6 @@ export default function Register() {
     function handleShowPassword() {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }
-
     function handleShowConfirmPassword() {
         setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
     }
@@ -546,3 +545,4 @@ export default function Register() {
         </div>
     );
 }
+
