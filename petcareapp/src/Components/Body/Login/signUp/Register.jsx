@@ -36,6 +36,8 @@ export default function Register() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const authContext = useAuth();
     const { setCookie } = useCookies(['username', 'password']);
+    const [isInvalidOTP, setIsInvalidOTP] = useState(false);
+
 
     async function register(user) {
         try {
@@ -53,7 +55,7 @@ export default function Register() {
             userUserName: userData.userUserName,
             otp: value,
         };
-        // console.log(userDataTemp);
+        console.log(userDataTemp);
         try {
             const checking = await verifyOTP(userDataTemp);
             if (checking.status == 200) {
@@ -68,8 +70,14 @@ export default function Register() {
                 // setCookie('password', userData.userPassword);
                 // navigate('/Home');
                 navigate('/Login');
+            }else{
+                // console.log("vo dayyy")
+                
+                // console.log(isInvalidOTP)
             }
         } catch (error) {
+            console.log("vo dayyy")
+            setIsInvalidOTP(true);
             setErrorMessage(true);
         }
     }
@@ -78,8 +86,10 @@ export default function Register() {
         console.log(data);
         try {
             await resendOTP(data);
+            alert('Resend successfully');
         } catch (error) {
             setErrorMessage(true);
+            alert('Resend fail');
         }
     }
 
@@ -96,6 +106,7 @@ export default function Register() {
 
     const handleInputOtpChange = (event) => {
         setOtp(event.target.value);
+        setIsInvalidOTP(false)
     };
 
     useEffect(() => {
@@ -351,7 +362,7 @@ export default function Register() {
                                 }}
                                 container
                                 component="form"
-                            >
+                            >  
                                 <Typography
                                     variant="h3"
                                     fontWeight={600}
@@ -361,7 +372,11 @@ export default function Register() {
                                 >
                                     OTP confirmation
                                 </Typography>
-
+                                {isInvalidOTP && (
+                                <span style={{ color: 'red', fontSize: '14px', marginTop: '5px', marginBot: '25px' }}>
+                                    Invalid OTP. Please try again.
+                                </span>
+                                )} 
                                 <TextField
                                     required
                                     variant="outlined"
@@ -371,7 +386,7 @@ export default function Register() {
                                     sx={{
                                         width: '80%',
                                         fontSize: '30px',
-                                        '&.MuiOutlinedInput-notchedOutline': { fontSize: '30px' },
+                                        '&.MuiOutlinedInput-notchedOutline': { fontSize: '30px' , marginTop: '35px'  },
                                     }}
                                     onChange={handleInputOtpChange}
                                 />
