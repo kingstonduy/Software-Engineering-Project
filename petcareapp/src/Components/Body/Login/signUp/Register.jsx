@@ -39,7 +39,10 @@ export default function Register() {
 
     async function register(user) {
         try {
-            await checkRegister(user);
+            const response = await checkRegister(user);
+            if(response.status == 200){
+                setModalOpen(true);
+            }
         } catch (error) {
             setErrorMessage(true);
         }
@@ -323,11 +326,12 @@ export default function Register() {
                             {/* <button className="btn_form" onClick={handleOpenModal}>
                                 Sign up
                             </button> */}
-                            <button type="submit" className="btn_form" onClick={handleOpenModal}>
+                            
+                            <button type="submit" className="btn_form" > 
                                 Sign up
                             </button>
                         </div>
-
+                        
                         <Modal open={modalOpen} onClose={handleCloseModal}>
                             <Box
                                 sx={{
